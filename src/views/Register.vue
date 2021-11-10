@@ -38,6 +38,7 @@ export default {
         email: "",
         phone: ""
       },
+
       loginRules: {
         username: [
           {
@@ -46,7 +47,7 @@ export default {
             trigger: "blur"
           }
         ],
-        password: [
+        password: [ 
           {
             required: true,
             message: "请输入密码",
