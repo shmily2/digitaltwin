@@ -15,7 +15,6 @@
         <el-form-item prop="phone">
           <el-input v-model="loginForm.phone" placeholder="请输入手机号码" auto-complete="on"></el-input>
         </el-form-item>
-        
         <el-form-item>
           <div>
             <el-button type="primary" @click="submitForm('ruleForm')" style="width:100%">注册</el-button>
