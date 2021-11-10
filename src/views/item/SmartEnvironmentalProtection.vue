@@ -45,11 +45,11 @@ export default {
 <style lang="scss" scoped>
 .environmentManage {
   width: 100%;
-  height: calc(100vh - 68px);
+  height: 100%;
   position: relative;
   .map {
     width: 100%;
-    height: calc(100vh - 68px);
+    height: 100%;
   }
   .chartsTitle {
     height: 30px;
