@@ -9,12 +9,17 @@
         <el-form-item prop="password">
           <el-input v-model="loginForm.password" placeholder="请输入密码" auto-complete="on"></el-input>
         </el-form-item>
-
+        <el-form-item prop="email">
+          <el-input v-model="loginForm.email" placeholder="请再次输入密码" auto-complete="on"></el-input>
+        </el-form-item>
+        <el-form-item prop="phone">
+          <el-input v-model="loginForm.phone" placeholder="请输入手机号码" auto-complete="on"></el-input>
+        </el-form-item>
         <el-form-item>
           <div>
-            <el-button type="primary" @click="submitForm('ruleForm')" style="width:100%">登录</el-button>
+            <el-button type="primary" @click="submitForm('ruleForm')" style="width:100%">注册</el-button>
           </div>
-          <router-link to="/register" style="color:#409eff">暂无账号,去注册</router-link>
+          <router-link to="/" style="color:#409eff">已有账号,去登录</router-link>
         </el-form-item>
       </el-form>
     </div>
@@ -28,7 +33,9 @@ export default {
     return {
       loginForm: {
         username: "",
-        password: ""
+        password: "",
+        email: "",
+        phone: ""
       },
       loginRules: {
         username: [
@@ -44,6 +51,20 @@ export default {
             message: "请输入密码",
             trigger: "blur"
           }
+        ],
+        email: [
+          {
+            required: true,
+            message: "请再次输入密码",
+            trigger: "blur"
+          }
+        ],
+        phone: [
+          {
+            required: true,
+            message: "请输入手机号码",
+            trigger: "blur"
+          }
         ]
       }
     };
@@ -52,12 +73,17 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.$router.push("/home");
+          this.$router.push("/login");
+          alert("submit!");
         } else {
           console.log("error submit!!");
           return false;
         }
       });
+    },
+    resetForm() {
+      this.$router.push("/register");
+      // this.$refs[formName].resetFields();
     }
   }
 };
@@ -73,7 +99,7 @@ export default {
   .box {
     position: absolute;
     width: 20%;
-    height: 30%;
+    height: 45%;
     right: 10%;
     top: 26%;
     background: rgba(36, 52, 58, 0.5);

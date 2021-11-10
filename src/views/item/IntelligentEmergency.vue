@@ -1,12 +1,13 @@
 <template>
-  <div>地图版面</div>
+  <div>智慧应急</div>
 </template>
 
 <script>
 export default {
-  name: "home"
-};
+
+}
 </script>
 
 <style>
+
 </style>

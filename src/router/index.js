@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/views/Login'
+import Register from '@/views/Register'
 import NotFound from '@/views/Error/404'
 import Home from '@/views/Home'
 import Intro from '@/views/Intro/Intro'
@@ -14,6 +15,11 @@ const router = new Router({
             path: '/',
             name: '登录',
             component: Login
+        },
+        {
+            path: '/register',
+            name: '注册',
+            component: Register
         },
         {
             path: '/home',
@@ -37,4 +43,11 @@ const router = new Router({
         }
     ]
 })
+router.beforeEach((to, from, next) => {
+    console.log(to)
+    console.log(from)
+    next()
+
+})
+
 export default router
