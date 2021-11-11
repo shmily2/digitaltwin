@@ -47,6 +47,7 @@ export default {
   width: 100%;
   height: 100%;
   position: relative;
+  overflow: auto;
   .map {
     width: 100%;
     height: 100%;
@@ -83,20 +84,19 @@ export default {
       }
     }
     .chartsTitle-img {
-      width: 5%;
-      height: 28px;
-      width: 0; /*1.设置宽高为0*/
+      width: 0;
       height: 0;
-      /*2.除右边都变透明色，实边*/
-      border-color: transparent transparent transparent red;
-      border-style: solid;
-      border-width: 0 0 12px 12px; /*3.上边宽100，右边宽50，下左边宽0*/
+      border-bottom: 10px solid #46eed7;
+      border-right: 10px solid transparent;
+      position: relative;
+      right: 0;
+      bottom: -10px;
     }
   }
   .left {
     position: absolute;
     width: 440px;
-    height: 100%;
+    height: calc(100% - 66px);
     min-height: 942px;
     border: 1px solid red;
     background: linear-gradient(
@@ -105,7 +105,7 @@ export default {
       rgba(33, 33, 33, 0) 100%
     );
     left: 0;
-    top: 0;
+    top: 64px;
     display: flex;
     justify-content: space-between;
     // flex-direction: Column-reverse;
@@ -148,7 +148,7 @@ export default {
   .right {
     position: absolute;
     width: 440px;
-    height: 100%;
+    height: calc(100% - 66px);
     min-height: 942px;
     border: 1px solid red;
     background: linear-gradient(
@@ -157,7 +157,7 @@ export default {
       rgba(33, 33, 33, 0.74) 100%
     );
     right: 0;
-    top: 0;
+    top: 64px;
   }
 }
 </style>
