@@ -9,6 +9,7 @@
     <div class="left">
       <div class="charts-div">
         <div class="charts_1">
+          <!-- chartsTitle -->
           <div class="chartsTitle">
             <div class="chartsTitle-font">
               <span class="chartsTitle-font--big">水质类别月度分析</span>
@@ -16,6 +17,34 @@
             </div>
             <div class="chartsTitle-img"></div>
           </div>
+          <!-- select -->
+          <div class="select">
+            <div class="type1">
+              <el-checkbox-group v-model="chartsList[0].form.allType">
+                <el-checkbox label="全选" name="type"></el-checkbox>
+              </el-checkbox-group>
+            </div>
+            <div class="type2"></div>
+          </div>
+          <div class="select2">
+            <div class="label">水质站：</div>
+            <div class="options">
+              <el-select
+                v-model="chartsList[0].form.value"
+                placeholder="请选择"
+              >
+                <el-option
+                  v-for="item in chartsList[0].form.options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                >
+                </el-option>
+              </el-select>
+            </div>
+          </div>
+          <!-- charts -->
+          <div></div>
         </div>
         <div class="charts_2"></div>
         <div class="charts_3"></div>
@@ -30,19 +59,42 @@
 // import BaiduMap from "vue-baidu-map/components/map/Map.vue";
 export default {
   name: "Index",
-
-  // components: {
-  //   BaiduMap,
-  //   // 使用该组件
-  // },
   data() {
-    return {};
+    return {
+      chartsList: [
+        {
+          form: {
+            allType: [],
+            type: [],
+            value: "",
+            options: [
+              {
+                value: "选项1",
+                label: "黄金糕",
+              },
+              {
+                value: "选项2",
+                label: "双皮奶",
+              },
+            ],
+          },
+        },
+      ],
+    };
   },
   methods: {},
 };
 </script>
-
-
+<style lang="scss">
+.environmentManage {
+  .el-input--suffix .el-input__inner {
+    padding-right: 30 px;
+    background: grey;
+    border: transparent;
+    color: #fff;
+  }
+}
+</style>
 <style lang="scss" scoped>
 .environmentManage {
   width: 100%;
@@ -94,11 +146,12 @@ export default {
       bottom: -10px;
     }
   }
+
   .left {
     position: absolute;
     width: 440px;
     height: calc(100% - 66px);
-    min-height: 942px;
+    min-height: 870px;
     border: 1px solid red;
     background: linear-gradient(
       90deg,
@@ -123,6 +176,48 @@ export default {
         width: 100%;
         height: 44%;
         border: 1px solid yellowgreen;
+        .select {
+          width: 100%;
+          height: 46px;
+          border: 1px solid red;
+          display: flex;
+          align-items: center;
+          .type1 {
+            width: 20%;
+            height: 100%;
+            font-size: 16px;
+            font-family: SourceHanSansCN-Regular, SourceHanSansCN;
+            font-weight: 400;
+            color: #ffffff;
+            line-height: 16px;
+          }
+          .type2 {
+            width: 78%;
+            height: 100%;
+          }
+        }
+        .select2 {
+          width: 100%;
+          height: 46px;
+          border: 1px solid red;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          .label {
+            width: 20%;
+            height: 16px;
+            font-size: 16px;
+            font-family: SourceHanSansCN-Medium, SourceHanSansCN;
+            font-weight: 500;
+            color: #ffffff;
+            text-align: right;
+            line-height: 16px;
+          }
+          .options {
+            width: 70%;
+            height: 40px;
+          }
+        }
       }
       .charts_2 {
         width: 100%;
@@ -150,7 +245,7 @@ export default {
     position: absolute;
     width: 440px;
     height: calc(100% - 66px);
-    min-height: 942px;
+    min-height: 870px;
     border: 1px solid red;
     background: linear-gradient(
       90deg,
