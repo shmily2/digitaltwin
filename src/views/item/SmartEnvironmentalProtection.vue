@@ -84,7 +84,16 @@ export default {
   methods: {},
 };
 </script>
-
+<style lang="scss">
+.environmentManage {
+  .el-input--suffix .el-input__inner {
+    padding-right: 30 px;
+    background: grey;
+    border: transparent;
+    color: #fff;
+  }
+}
+</style>
 <style lang="scss" scoped>
 .environmentManage {
   width: 100%;
@@ -206,13 +215,6 @@ export default {
           .options {
             width: 70%;
             height: 40px;
-            .el-input--suffix .el-input__inner {
-              padding-right: 30 px;
-              background: grey;
-              border: transparent;
-              color: #fff;
-              height: 36px;
-            }
           }
         }
       }
