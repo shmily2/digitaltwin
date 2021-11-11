@@ -12,11 +12,13 @@
       </div>
       <div class="middle">
         <ul>
-          <li v-for="(item, index) in List" :key="index" @click="typeclick(index)">
+          <li
+            v-for="(item, index) in List"
+            :key="index"
+            @click="typeclick(index)"
+          >
             <router-link :to="item.src" :class="{ active: active == index }">
-              {{
-              item.name
-              }}
+              {{ item.name }}
             </router-link>
           </li>
         </ul>
@@ -55,47 +57,70 @@ export default {
   name: "home",
   data() {
     return {
+      screenWidth: document.body.clientWidth,
       active: 0,
       List: [
         {
           name: "综合态势",
-          src: "/home/ComprehensiveSituation"
+          src: "/home/ComprehensiveSituation",
         },
         {
           name: "智慧经济",
-          src: "/home/SmartEconomy"
+          src: "/home/SmartEconomy",
         },
         {
           name: "智慧封闭",
-          src: "/home/IntellectualClosure"
+          src: "/home/IntellectualClosure",
         },
         {
           name: "智慧安监",
-          src: "/home/IntelligentSafetySupervision"
+          src: "/home/IntelligentSafetySupervision",
         },
         {
           name: "智慧环保",
-          src: "/home/SmartEnvironmentalProtection"
+          src: "/home/SmartEnvironmentalProtection",
         },
         {
           name: "智慧应急",
-          src: "/home/IntelligentEmergency"
+          src: "/home/IntelligentEmergency",
         },
         {
           name: "辅助决策",
-          src: "/home/AuxiliaryDecision"
-        }
-      ]
+          src: "/home/AuxiliaryDecision",
+        },
+      ],
     };
   },
   created() {
     this.active = this.$route.meta.index;
   },
+  mounted() {
+    // 浏览器窗口大小发生变化
+    window.onresize = () => {
+      return (() => {
+        this.screenWidth = document.body.clientWidth;
+      })();
+    };
+  },
+  watch: {
+    screenWidth() {
+      // console.log('asjhdjaksjdhjahsjkdkjahdkjakjsdhjkasdjkakjdshkj')
+      // this.$nextTick(() => {
+      //   if (this.economicsList) {
+      //     this.economicsecharts.resize();
+      //   }
+      //   if (this.energyList) {
+      //     this.myChart.resize();
+      //   }
+      //   this.gaugeChart.resize();
+      // });
+    },
+  },
   methods: {
     typeclick(ind) {
       this.active = ind;
-    }
-  }
+    },
+  },
 };
 </script>
 
