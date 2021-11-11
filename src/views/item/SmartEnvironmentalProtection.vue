@@ -116,18 +116,20 @@ export default {
     });
   },
   mounted() {
-    console.log(window.onresize);
+    let _this = this;
     window.addEventListener("resize", function () {
-      this.myChart.resize();
+      console.log("asdhjahsdjhkasdh");
+      _this.myChart.resize();
+      _this.myChart2.resize();
     });
 
-    window.onresize = () => {
-      console.log('asdhjahsdjhkasdh')
-      //监听窗口变化
-      // return (() => {
-      //   this.myChart.resize();
-      // })();
-    };
+    // window.onresize = () => {
+    //   console.log('asdhjahsdjhkasdh')
+    //   //监听窗口变化
+    //   // return (() => {
+    //   //   this.myChart.resize();
+    //   // })();
+    // };
   },
   watch: {
     screenWidth() {
