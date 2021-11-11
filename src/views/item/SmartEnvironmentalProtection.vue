@@ -1,10 +1,13 @@
+<!-- 智慧环保 -->
 <template>
-  <div>智慧环保</div>
+  <div class="SmartEnvironmentalProtection"></div>
 </template>
 
 <script>
 export default {};
 </script>
 
-<style>
+<style lang="scss" scoped>
+.SmartEnvironmentalProtection {
+}
 </style>
