@@ -12,8 +12,14 @@
       </div>
       <div class="middle">
         <ul>
-          <li v-for="(item,index) in List" :key="index" @click="typeclick(index)">
-            <router-link :to="item.src" :class="{'active':active==index}">{{item.name}}</router-link>
+          <li
+            v-for="(item, index) in List"
+            :key="index"
+            @click="typeclick(index)"
+          >
+            <router-link :to="item.src" :class="{ active: active == index }">{{
+              item.name
+            }}</router-link>
           </li>
         </ul>
       </div>
@@ -55,33 +61,33 @@ export default {
       List: [
         {
           name: "综合态势",
-          src: "/home/ComprehensiveSituation"
+          src: "/home/ComprehensiveSituation",
         },
         {
           name: "智慧经济",
-          src: "/home/SmartEconomy"
+          src: "/home/SmartEconomy",
         },
         {
           name: "智慧封闭",
-          src: "/home/IntellectualClosure"
+          src: "/home/IntellectualClosure",
         },
         {
           name: "智慧安监",
-          src: "/home/IntelligentSafetySupervision"
+          src: "/home/IntelligentSafetySupervision",
         },
         {
           name: "智慧环保",
-          src: "/home/SmartEnvironmentalProtection"
+          src: "/home/SmartEnvironmentalProtection",
         },
         {
           name: "智慧应急",
-          src: "/home/IntelligentEmergency"
+          src: "/home/IntelligentEmergency",
         },
         {
           name: "辅助决策",
-          src: "/home/AuxiliaryDecision"
-        }
-      ]
+          src: "/home/AuxiliaryDecision",
+        },
+      ],
     };
   },
   created() {
@@ -90,8 +96,8 @@ export default {
   methods: {
     typeclick(ind) {
       this.active = ind;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -101,9 +107,13 @@ export default {
   height: 100vh;
   display: flex;
   flex-direction: column;
+  position: relative;
   .head {
     height: 64px;
     width: 100%;
+    z-index: 10000;
+    position: absolute;
+    top: 0;
     background: linear-gradient(
       180deg,
       rgba(33, 33, 33, 0.8) 0%,
@@ -168,7 +178,7 @@ export default {
       }
     }
     .middle {
-      width:720px;
+      width: 720px;
       padding-right: 40px;
       box-sizing: border-box;
       ul {
@@ -186,6 +196,7 @@ export default {
   }
   .content {
     flex: 1;
+    overflow: hidden;
     width: 100%;
   }
 }
