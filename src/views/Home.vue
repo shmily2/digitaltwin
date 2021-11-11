@@ -12,14 +12,12 @@
       </div>
       <div class="middle">
         <ul>
-          <li
-            v-for="(item, index) in List"
-            :key="index"
-            @click="typeclick(index)"
-          >
-            <router-link :to="item.src" :class="{ active: active == index }">{{
+          <li v-for="(item, index) in List" :key="index" @click="typeclick(index)">
+            <router-link :to="item.src" :class="{ active: active == index }">
+              {{
               item.name
-            }}</router-link>
+              }}
+            </router-link>
           </li>
         </ul>
       </div>
@@ -61,33 +59,33 @@ export default {
       List: [
         {
           name: "综合态势",
-          src: "/home/ComprehensiveSituation",
+          src: "/home/ComprehensiveSituation"
         },
         {
           name: "智慧经济",
-          src: "/home/SmartEconomy",
+          src: "/home/SmartEconomy"
         },
         {
           name: "智慧封闭",
-          src: "/home/IntellectualClosure",
+          src: "/home/IntellectualClosure"
         },
         {
           name: "智慧安监",
-          src: "/home/IntelligentSafetySupervision",
+          src: "/home/IntelligentSafetySupervision"
         },
         {
           name: "智慧环保",
-          src: "/home/SmartEnvironmentalProtection",
+          src: "/home/SmartEnvironmentalProtection"
         },
         {
           name: "智慧应急",
-          src: "/home/IntelligentEmergency",
+          src: "/home/IntelligentEmergency"
         },
         {
           name: "辅助决策",
-          src: "/home/AuxiliaryDecision",
-        },
-      ],
+          src: "/home/AuxiliaryDecision"
+        }
+      ]
     };
   },
   created() {
@@ -96,8 +94,8 @@ export default {
   methods: {
     typeclick(ind) {
       this.active = ind;
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -141,7 +139,6 @@ export default {
           width: 182px;
           height: 26px;
           font-size: 26px;
-          font-family: SourceHanSansCN-Medium, SourceHanSansCN;
           font-weight: 500;
           color: #ffffff;
           line-height: 26px;
@@ -150,7 +147,6 @@ export default {
           width: 178px;
           height: 10px;
           font-size: 10px;
-          font-family: SourceHanSansCN-Medium, SourceHanSansCN;
           font-weight: 500;
           color: #b1b1b1;
           line-height: 10px;
@@ -164,6 +160,10 @@ export default {
       padding: 0 10px;
       box-sizing: border-box;
       color: #fff;
+      font-size: 12px;
+      font-weight: 400;
+      color: #ffffff;
+      line-height: 24px;
       div {
         display: flex;
         flex-direction: column;
