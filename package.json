@@ -9,8 +9,10 @@
     },
     "dependencies": {
         "core-js": "^3.6.5",
+        "echarts": "^5.2.2",
         "vue": "^2.6.11",
-        "vue-baidu-map": "^0.21.22"
+        "vue-baidu-map": "^0.21.22",
+        "vue-echarts": "^6.0.0"
     },
     "devDependencies": {
         "@vue/cli-plugin-babel": "~4.5.0",
@@ -38,7 +40,9 @@
         "parserOptions": {
             "parser": "babel-eslint"
         },
-        "rules": {}
+        "rules": {
+            "no-unused-vars": "off"
+        }
     },
     "browserslist": [
         "> 1%",
