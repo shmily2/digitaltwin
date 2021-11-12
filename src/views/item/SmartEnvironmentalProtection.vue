@@ -246,7 +246,7 @@ export default {
         EChart: this.myChart2,
         name: "",
         xAxisVal: ["Ⅲ类", "Ⅴ类", "劣Ⅴ类"],
-        seriesData: [120, 200, 150],
+        seriesData: [16.17, 33.3, 50,100],
       };
       singleBar(data);
     },
@@ -256,7 +256,7 @@ export default {
         EChart: this.myChart3,
         name: "",
         xAxisVal: ["Ⅲ类", "Ⅴ类", "劣Ⅴ类"],
-        seriesData: [16.17, 33.3, 66.7,100],
+        seriesData: [16.17, 16.17, 66.7,100],
       };
       singleBar(data);
     },
