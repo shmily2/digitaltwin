@@ -184,8 +184,23 @@
             月份
           </div>
         </div>
-        <div>
-          
+      </div>
+      <div class="chart1">
+        <div class="chartsTitle2">
+          <div class="point"></div>
+          <div class="name">空气质量指数类别天数占比</div>
+        </div>
+      </div>
+      <div class="chart2">
+        <div class="chartsTitle2">
+          <div class="point"></div>
+          <div class="name">首要污染物天数占比</div>
+        </div>
+      </div>
+      <div class="chart3">
+        <div class="chartsTitle2">
+          <div class="point"></div>
+          <div class="name">AQI最差时段</div>
         </div>
       </div>
     </div>
@@ -248,27 +263,10 @@ export default {
   mounted() {
     let _this = this;
     window.addEventListener("resize", function () {
-      console.log("asdhjahsdjhkasdh");
       _this.myChart.resize();
       _this.myChart2.resize();
       _this.myChart3.resize();
     });
-
-    // window.onresize = () => {
-    //   console.log('asdhjahsdjhkasdh')
-    //   //监听窗口变化
-    //   // return (() => {
-    //   //   this.myChart.resize();
-    //   // })();
-    // };
-  },
-  watch: {
-    screenWidth() {
-      console.log("askdhjkahsdjhksjd");
-      // this.$nextTick(() => {
-      //   this.myChart.resize();
-      // });
-    },
   },
   methods: {
     forward() {
@@ -497,6 +495,28 @@ export default {
       bottom: -9px;
     }
   }
+  .chartsTitle2 {
+    border: 1px solid red;
+    width: 100%;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    .point {
+      width: 10px;
+      height: 10px;
+      background: #1879f0;
+      border-radius: 5px;
+    }
+    .name {
+      margin-left: 10px;
+      font-size: 18px;
+      font-family: SourceHanSansCN-Medium, SourceHanSansCN;
+      font-weight: 500;
+      color: #ffffff;
+      line-height: 22px;
+    }
+  }
 
   .left {
     position: absolute;
@@ -704,6 +724,18 @@ export default {
           cursor: pointer;
         }
       }
+    }
+    .chart1 {
+      width: 100%;
+      height: 26%;
+    }
+    .chart2 {
+      width: 100%;
+      height: 26%;
+    }
+    .chart3 {
+      width: 100%;
+      height: 26%;
     }
   }
 }
