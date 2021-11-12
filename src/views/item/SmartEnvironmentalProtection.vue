@@ -67,15 +67,128 @@
         </div>
       </div>
       <div class="icons-list">
-        <div>
-          <div class="icon_item"><img src="" alt="" /></div>
-          <div class="icon_item"><img src="" alt="" /></div>
-          <div class="icon_item"><img src="" alt="" /></div>
-          <div class="icon_item"><img src="" alt="" /></div>
+        <div class="left_iconList">
+          <div
+            @click="iconClick(1)"
+            :class="iconClicked == 1 ? 'icon_item_active' : 'icon_item'"
+          >
+            <img
+              src="@/assets/icons/environmentProtect/1.png"
+              width="20px"
+              height="20px"
+              alt=""
+            />
+          </div>
+          <div
+            @click="iconClick(2)"
+            :class="iconClicked == 2 ? 'icon_item_active' : 'icon_item'"
+          >
+            <img
+              src="@/assets/icons/environmentProtect/2.png"
+              width="20px"
+              height="20px"
+              alt=""
+            />
+          </div>
+          <div
+            @click="iconClick(3)"
+            :class="iconClicked == 3 ? 'icon_item_active' : 'icon_item'"
+          >
+            <img
+              src="@/assets/icons/environmentProtect/3.png"
+              width="20px"
+              height="20px"
+              alt=""
+            />
+          </div>
+          <div
+            @click="iconClick(4)"
+            :class="iconClicked == 4 ? 'icon_item_active' : 'icon_item'"
+          >
+            <img
+              src="@/assets/icons/environmentProtect/4.png"
+              width="20px"
+              height="20px"
+              alt=""
+            />
+          </div>
         </div>
       </div>
     </div>
-    <div class="right"></div>
+    <div class="right">
+      <div class="chartsTitle">
+        <div class="chartsTitle-font">
+          <span class="chartsTitle-font--big">水质类别月度分析</span>
+          <span class="chartsTitle-font--small">/ Monthly analysis</span>
+        </div>
+        <div class="chartsTitle-img"></div>
+      </div>
+      <div class="select2">
+        <div class="label">监测点：</div>
+        <div class="options">
+          <el-select v-model="chartsList[0].form.value" placeholder="请选择">
+            <el-option
+              v-for="item in chartsList[0].form.options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            >
+            </el-option>
+          </el-select>
+        </div>
+      </div>
+      <div class="date">
+        <div class="select">
+          <div class="done" @click="forward">《</div>
+          <div class="select_main">
+            <div class="year">{{ date.year }}年</div>
+            <div
+              v-if="dateType !== 'year' && dateType == 'quarterly'"
+              class="quarter"
+            >
+              第{{ date.quarter }}季度
+            </div>
+            <div
+              v-if="dateType !== 'year' && dateType == 'month'"
+              class="month"
+            >
+              {{ date.month > 9 ? date.month : "0" + date.month }}月
+            </div>
+          </div>
+          <div class="done" @click="backward">》</div>
+        </div>
+        <div class="item">
+          <div
+            @click="chooseDateType('year')"
+            :class="dateType == 'year' ? 'itemType_active' : 'itemType'"
+            style="border-top-left-radius: 4px; border-bottom-left-radius: 4px"
+          >
+            年度
+          </div>
+          <div
+            @click="chooseDateType('quarterly')"
+            :class="dateType == 'quarterly' ? 'itemType_active' : 'itemType'"
+            class="itemType"
+          >
+            季度
+          </div>
+          <div
+            @click="chooseDateType('month')"
+            :class="dateType == 'month' ? 'itemType_active' : 'itemType'"
+            class="itemType"
+            style="
+              border-top-right-radius: 4px;
+              border-bottom-right-radius: 4px;
+            "
+          >
+            月份
+          </div>
+        </div>
+        <div>
+          
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -86,6 +199,13 @@ export default {
   name: "Index",
   data() {
     return {
+      iconClicked: 1,
+      date: {
+        year: "",
+        quarter: "",
+        month: "",
+      },
+      dateType: "month",
       myChart: "",
       myChart2: "",
       myChart3: "",
@@ -110,6 +230,15 @@ export default {
     };
   },
   created() {
+    this.date = {
+      year: new Date().getFullYear(),
+      month: new Date().getMonth() + 1,
+      quarter: Math.floor(
+        (new Date().getMonth() + 1) % 3 == 0
+          ? (new Date().getMonth() + 1) / 3
+          : (new Date().getMonth() + 1) / 3 + 1
+      ),
+    };
     this.$nextTick(() => {
       this.initColumnChart();
       this.initSingleBar();
@@ -142,6 +271,50 @@ export default {
     },
   },
   methods: {
+    forward() {
+      if (this.dateType == "year") {
+        this.date.year--;
+      } else if (this.dateType == "quarterly") {
+        if (this.date.quarter - 1 !== 0) {
+          this.date.quarter--;
+        } else {
+          this.date.year--;
+          this.date.quarter = 4;
+        }
+      } else if (this.dateType == "month") {
+        if (this.date.month - 1 !== 0) {
+          this.date.month--;
+        } else {
+          this.date.year--;
+          this.date.month = 12;
+        }
+      }
+    },
+    backward() {
+      if (this.dateType == "year") {
+        this.date.year++;
+      } else if (this.dateType == "quarterly") {
+        if (this.date.quarter + 1 !== 5) {
+          this.date.quarter++;
+        } else {
+          this.date.year++;
+          this.date.quarter = 1;
+        }
+      } else if (this.dateType == "month") {
+        if (this.date.month + 1 !== 13) {
+          this.date.month++;
+        } else {
+          this.date.year++;
+          this.date.month = 1;
+        }
+      }
+    },
+    chooseDateType(type) {
+      this.dateType = type;
+    },
+    iconClick(type) {
+      this.iconClicked = type;
+    },
     initColumnChart() {
       this.myChart = echarts.init(this.$refs.chartColumn);
       // 进行数据请求
@@ -246,7 +419,7 @@ export default {
         EChart: this.myChart2,
         name: "",
         xAxisVal: ["Ⅲ类", "Ⅴ类", "劣Ⅴ类"],
-        seriesData: [16.17, 33.3, 50,100],
+        seriesData: [16.17, 33.3, 50, 100],
       };
       singleBar(data);
     },
@@ -256,7 +429,7 @@ export default {
         EChart: this.myChart3,
         name: "",
         xAxisVal: ["Ⅲ类", "Ⅴ类", "劣Ⅴ类"],
-        seriesData: [16.17, 16.17, 66.7,100],
+        seriesData: [16.17, 16.17, 66.7, 100],
       };
       singleBar(data);
     },
@@ -330,7 +503,6 @@ export default {
     width: 440px;
     height: calc(100% - 66px);
     min-height: 870px;
-    border: 1px solid red;
     background: linear-gradient(
       90deg,
       rgba(33, 33, 33, 0.74) 0%,
@@ -404,19 +576,39 @@ export default {
       }
     }
     .icons-list {
-      width: 40px;
+      width: 70px;
       height: auto;
       min-height: 100px;
       position: relative;
-      bottom: 0px;
-      border: 1px solid blue;
+      // bottom: 0px;
       .left_iconList {
         width: 100%;
-        height: 232px;
-        border: 1px solid yellow;
+        position: absolute;
+        height: 280px;
+        bottom: 60px;
         .icon_item {
-          width: 40px;
-          height: 40px;
+          cursor: pointer;
+          width: 70px;
+          height: 70px;
+          background: url("../../assets/icons/environmentProtect/back.png") 0
+            8px;
+          background-size: 100% 100%;
+          background-repeat: no-repeat;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .icon_item_active {
+          cursor: pointer;
+          width: 70px;
+          height: 70px;
+          background: url("../../assets/icons/environmentProtect/back_active.png")
+            0 8px;
+          background-size: 100% 100%;
+          background-repeat: no-repeat;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
       }
     }
@@ -434,6 +626,85 @@ export default {
     );
     right: 0;
     top: 64px;
+    padding: 36px 30px 36px 62px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .select2 {
+      width: 100%;
+      height: 46px;
+      // border: 1px solid red;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+      margin-top: 10px;
+      .label {
+        width: 20%;
+        height: 16px;
+        font-size: 16px;
+        font-family: SourceHanSansCN-Medium, SourceHanSansCN;
+        font-weight: 500;
+        color: #ffffff;
+        text-align: right;
+        line-height: 16px;
+      }
+      .options {
+        width: 70%;
+        height: 40px;
+      }
+    }
+    .date {
+      width: 100%;
+      height: 40px;
+      margin: 6px 0;
+      border: 1px solid red;
+      display: flex;
+      .select {
+        width: 50%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        .select_main {
+          display: flex;
+          height: 100%;
+          align-items: center;
+          margin: 0 14px;
+          color: #fff;
+        }
+        .done {
+          cursor: pointer;
+          color: #fff;
+        }
+      }
+      .item {
+        width: 50%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        border-radius: 4px;
+        .itemType {
+          width: 33.3%;
+          height: 36px;
+          color: #fff;
+          font-size: 14px;
+          background: rgba(255, 255, 255, 0.5);
+          line-height: 36px;
+          cursor: pointer;
+        }
+        .itemType_active {
+          width: 33.3%;
+          height: 36px;
+          color: #fff;
+          font-size: 14px;
+          background: #1879f0;
+          line-height: 36px;
+          cursor: pointer;
+        }
+      }
+    }
   }
 }
 </style>

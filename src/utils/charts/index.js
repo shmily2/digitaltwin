@@ -40,7 +40,8 @@ export function ColumnBar(val) {
                 type: 'value',
                 splitLine: {
                     lineStyle: {
-                        type: 'dashed'
+                        type: 'dashed',
+                        color: "rgba(255, 255, 255, 0.3)"
                     }
                 },
                 axisLabel: {
@@ -90,6 +91,7 @@ export function singleBar(val) {
             splitLine: {
                 lineStyle: {
                     type: 'dashed',
+                    color: "rgba(255, 255, 255, 0.3)"
                 },
 
             },
