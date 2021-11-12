@@ -88,6 +88,7 @@ export default {
     return {
       myChart: "",
       myChart2: "",
+      myChart3: "",
       screenWidth: document.body.clientWidth,
       chartsList: [
         {
@@ -121,6 +122,7 @@ export default {
       console.log("asdhjahsdjhkasdh");
       _this.myChart.resize();
       _this.myChart2.resize();
+      _this.myChart3.resize();
     });
 
     // window.onresize = () => {
@@ -152,6 +154,7 @@ export default {
             name: "Ⅰ类",
             type: "bar",
             stack: "Ad",
+            barWidth: 16, //柱图宽度
             emphasis: {
               focus: "series",
             },
@@ -248,12 +251,12 @@ export default {
       singleBar(data);
     },
     initSingleBar2() {
-      this.myChart2 = echarts.init(this.$refs.chartSingleBar2);
+      this.myChart3 = echarts.init(this.$refs.chartSingleBar2);
       let data = {
-        EChart: this.myChart2,
+        EChart: this.myChart3,
         name: "",
         xAxisVal: ["Ⅲ类", "Ⅴ类", "劣Ⅴ类"],
-        seriesData: [120, 200, 150],
+        seriesData: [16.17, 33.3, 66.7,100],
       };
       singleBar(data);
     },
@@ -295,7 +298,7 @@ export default {
         height: 28px;
         // width: 70%;
         line-height: 28px;
-        font-size: 21px;
+        font-size: 18px;
         font-family: SourceHanSansCN-Regular, SourceHanSansCN;
         font-weight: 400;
         color: #ffffff;

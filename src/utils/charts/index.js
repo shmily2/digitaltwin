@@ -62,6 +62,7 @@ export function singleBar(val) {
     let option = {
         tooltip: {
             show: true,
+            formatter: '{b}:{c}%',
             axisPointer: {
                 type: 'shadow'
             }
@@ -97,8 +98,10 @@ export function singleBar(val) {
                 textStyle: {
                     color: '#fff',
                     fontSize: '12'
-                }
+                },
+                formatter: '{value} %'
             },
+
         },
         series: [{
             itemStyle: {
@@ -113,8 +116,8 @@ export function singleBar(val) {
                     label: {
                         show: true,
                         position: "top",
+                        formatter: '{c}%',
                         textStyle: {
-                            formatter: "{c}" + "人",
                             fontWeight: "bolder",
                             fontSize: "12",
                             color: "#fff"
@@ -129,6 +132,7 @@ export function singleBar(val) {
                     color: '#de5df2'
                 }]),
             },
+            barWidth: 22,//柱图宽度
             data: val.seriesData,
             type: 'bar',
             // itemStyle: {
