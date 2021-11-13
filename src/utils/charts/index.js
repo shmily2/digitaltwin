@@ -146,3 +146,68 @@ export function singleBar(val) {
     };
     val.EChart.setOption(option);
 }
+
+
+export function pie(val) {
+    let option = {
+        title: {
+            text: 'Referer of a Website',
+            subtext: 'Fake Data',
+            left: 'center',
+            show: false
+        },
+        grid: {
+            left: '0%',
+            right: '0%',
+            bottom: '0%',
+            top: "0%",
+            containLabel: true
+        },
+        tooltip: {
+            trigger: 'item'
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'left',
+            show: false,
+        },
+        series: [
+            {
+                name: val.name,
+                type: 'pie',
+                radius: '50%',
+                label: {
+                    normal: {
+                        show: false,
+                    },
+                },
+                labelLine: {
+                    normal: {
+                        show: false
+                    }
+                },
+                data: val.seriesData,
+                // [
+                //     {
+                //         value: 1048, name: 'Search Engine',
+                //         itemStyle: {
+                //             normal: {
+                //                 color: "#1879F0",
+                //             },
+                //         },
+                //     },
+                // ],
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+    val.EChart.setOption(option);
+}
+
+

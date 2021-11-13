@@ -190,11 +190,45 @@
           <div class="point"></div>
           <div class="name">空气质量指数类别天数占比</div>
         </div>
+        <div class="chart1_main">
+          <div class="chart">
+            <div ref="chartPie1" style="width: 100%; height: 100%"></div>
+          </div>
+          <div class="chartList">
+            <div
+              class="chartList-item"
+              v-for="(item, index) in rightCharts.chart1"
+              :key="index"
+            >
+              <div class="index" :style="{ background: item.color }"></div>
+              <div style="width: 46%">{{ item.type }}</div>
+              <div>{{ item.num }}</div>
+              <div>{{ item.percent }}</div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="chart2">
         <div class="chartsTitle2">
           <div class="point"></div>
           <div class="name">首要污染物天数占比</div>
+        </div>
+        <div class="chart1_main">
+          <div class="chart">
+            <div ref="chartPie2" style="width: 100%; height: 100%"></div>
+          </div>
+          <div class="chartList">
+            <div
+              class="chartList-item"
+              v-for="(item, index) in rightCharts.chart2"
+              :key="index"
+            >
+              <div class="index" :style="{ background: item.color }"></div>
+              <div style="width: 46%">{{ item.type }}</div>
+              <div>{{ item.num }}</div>
+              <div>{{ item.percent }}</div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="chart3">
@@ -208,7 +242,7 @@
 </template>
 
 <script>
-import { ColumnBar, singleBar } from "@/utils/charts/index.js";
+import { ColumnBar, singleBar, pie } from "@/utils/charts/index.js";
 import * as echarts from "echarts";
 export default {
   name: "Index",
@@ -220,10 +254,92 @@ export default {
         quarter: "",
         month: "",
       },
+
+      rightCharts: {
+        chart1: [
+          {
+            color: "#1879F0",
+            type: "优",
+            num: 100,
+            percent: "11%",
+          },
+          {
+            color: "#3885E4",
+            type: "良",
+            num: 125,
+            percent: "16%",
+          },
+          {
+            color: "#73AEF8",
+            type: "轻度污染",
+            num: 40,
+            percent: "4%",
+          },
+          {
+            color: "#8BBFFF",
+            type: "中度污染",
+            num: 85,
+            percent: "8%",
+          },
+          {
+            color: "#ABD1FF",
+            type: "重度污染",
+            num: 40,
+            percent: "4%",
+          },
+          {
+            color: "#D2E6FF",
+            type: "严重污染",
+            num: 85,
+            percent: "8%",
+          },
+        ],
+        chart2: [
+          {
+            color: "#1879F0",
+            type: "PM10",
+            num: 94,
+            percent: "86.24%",
+          },
+          {
+            color: "#3885E4",
+            type: "PM2.5",
+            num: 9,
+            percent: "8.26%",
+          },
+          {
+            color: "#73AEF8",
+            type: "CO",
+            num: 2,
+            percent: "1.83%",
+          },
+          {
+            color: "#8BBFFF",
+            type: "SO2",
+            num: 2,
+            percent: "1.83%",
+          },
+          {
+            color: "#ABD1FF",
+            type: "O3",
+            num: 2,
+            percent: "1.83%",
+          },
+          {
+            color: "#D2E6FF",
+            type: "NO2",
+            num: 0,
+            percent: "0%",
+          },
+        ],
+      },
+
       dateType: "month",
       myChart: "",
       myChart2: "",
       myChart3: "",
+      myChart4: "",
+      myChart5: "",
       screenWidth: document.body.clientWidth,
       chartsList: [
         {
@@ -258,6 +374,8 @@ export default {
       this.initColumnChart();
       this.initSingleBar();
       this.initSingleBar2();
+      this.initPieChart1();
+      this.initPieChart2();
     });
   },
   mounted() {
@@ -266,6 +384,7 @@ export default {
       _this.myChart.resize();
       _this.myChart2.resize();
       _this.myChart3.resize();
+      _this.myChart4.resize();
     });
   },
   methods: {
@@ -312,6 +431,42 @@ export default {
     },
     iconClick(type) {
       this.iconClicked = type;
+    },
+    // 饼状图
+    initPieChart1() {
+      this.myChart4 = echarts.init(this.$refs.chartPie1);
+      let data = {
+        EChart: this.myChart4,
+        name: "",
+        xAxisVal: ["Ⅲ类", "Ⅴ类", "劣Ⅴ类"],
+        seriesData: this.formatterPie(this.rightCharts.chart1),
+      };
+      pie(data);
+    },
+    formatterPie(res) {
+      let result = [];
+      res.forEach((item) => {
+        result.push({
+          value: item.num,
+          name: item.type,
+          itemStyle: {
+            normal: {
+              color: item.color,
+            },
+          },
+        });
+      });
+      return result;
+    },
+    initPieChart2() {
+      this.myChart5 = echarts.init(this.$refs.chartPie2);
+      let data = {
+        EChart: this.myChart5,
+        name: "",
+        xAxisVal: ["Ⅲ类", "Ⅴ类", "劣Ⅴ类"],
+        seriesData: this.formatterPie(this.rightCharts.chart2),
+      };
+      pie(data);
     },
     initColumnChart() {
       this.myChart = echarts.init(this.$refs.chartColumn);
@@ -474,6 +629,7 @@ export default {
         font-weight: 400;
         color: #ffffff;
         line-height: 28px;
+        margin-right: 4px;
       }
       .chartsTitle-font--small {
         height: 28px;
@@ -501,7 +657,7 @@ export default {
     height: 22px;
     display: flex;
     align-items: center;
-    justify-content: start;
+    justify-content: flex-start;
     .point {
       width: 10px;
       height: 10px;
@@ -686,7 +842,7 @@ export default {
         height: 100%;
         display: flex;
         align-items: center;
-        justify-content: start;
+        justify-content: flex-start;
         .select_main {
           display: flex;
           height: 100%;
@@ -728,10 +884,78 @@ export default {
     .chart1 {
       width: 100%;
       height: 26%;
+      .chart1_main {
+        width: 100%;
+        height: calc(100% - 22px);
+        display: flex;
+        align-items: center;
+        .chart {
+          width: 50%;
+          height: 100%;
+          border: 1px solid red;
+        }
+        .chartList {
+          width: 50%;
+          height: 100%;
+          padding: 20px 0;
+          box-sizing: border-box;
+          .chartList-item {
+            opacity: 0.8;
+            border: 1px dashed rgba(255, 255, 255, 0.3);
+            display: flex;
+            font-size: 14px;
+            align-items: center;
+            .index {
+              border-radius: 5px;
+              width: 10px;
+              height: 10px;
+            }
+            div {
+              width: 33%;
+              opacity: 1;
+              color: #fff;
+            }
+          }
+        }
+      }
     }
     .chart2 {
       width: 100%;
       height: 26%;
+      .chart1_main {
+        width: 100%;
+        height: calc(100% - 22px);
+        display: flex;
+        align-items: center;
+        .chart {
+          width: 50%;
+          height: 100%;
+          border: 1px solid red;
+        }
+        .chartList {
+          width: 50%;
+          height: 100%;
+          padding: 20px 0;
+          box-sizing: border-box;
+          .chartList-item {
+            opacity: 0.8;
+            border: 1px dashed rgba(255, 255, 255, 0.3);
+            display: flex;
+            font-size: 14px;
+            align-items: center;
+            .index {
+              border-radius: 5px;
+              width: 10px;
+              height: 10px;
+            }
+            div {
+              width: 33%;
+              opacity: 1;
+              color: #fff;
+            }
+          }
+        }
+      }
     }
     .chart3 {
       width: 100%;
