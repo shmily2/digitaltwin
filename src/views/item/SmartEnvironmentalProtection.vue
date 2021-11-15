@@ -220,7 +220,7 @@
           <div class="chartList">
             <div
               class="chartList-item"
-              v-for="(item, index) in rightCharts.chart1"
+              v-for="(item, index) in rightCharts.chart2"
               :key="index"
             >
               <div class="index" :style="{ background: item.color }"></div>
@@ -307,31 +307,31 @@ export default {
           {
             color: "#3885E4",
             type: "PM2.5",
-            num: 9,
+            num: 21,
             percent: "8.26%",
           },
           {
             color: "#73AEF8",
             type: "CO",
-            num: 2,
+            num: 26,
             percent: "1.83%",
           },
           {
             color: "#8BBFFF",
             type: "SO2",
-            num: 2,
+            num: 31,
             percent: "1.83%",
           },
           {
             color: "#ABD1FF",
             type: "O3",
-            num: 2,
+            num: 41,
             percent: "1.83%",
           },
           {
             color: "#D2E6FF",
             type: "NO2",
-            num: 0,
+            num: 32,
             percent: "0%",
           },
         ],

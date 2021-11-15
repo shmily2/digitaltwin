@@ -307,6 +307,8 @@ export function waterFall(val) {
 
 
 
+
+
 export function BasicsBar(val) {
     let option = {
         tooltip: {
