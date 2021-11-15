@@ -49,25 +49,10 @@
                 </div>
 
                 <ul>
-                  <li>
+                  <li v-for="(item, id) in list1" :key="id">
                     <i></i>
-                    <span>一级</span>
-                    <span>52</span>
-                  </li>
-                  <li>
-                    <i></i>
-                    <span>二级</span>
-                    <span>15</span>
-                  </li>
-                  <li>
-                    <i></i>
-                    <span>三级</span>
-                    <span>51</span>
-                  </li>
-                  <li>
-                    <i></i>
-                    <span>四级</span>
-                    <span>42</span>
+                    <span>{{ item.name }}</span>
+                    <span>{{ item.val }}</span>
                   </li>
                 </ul>
               </div>
@@ -114,6 +99,8 @@
             </div>
           </div>
         </div>
+
+        <div style="red;font-size:90px">423423423</div>
       </div>
 
       <div class="right">
@@ -134,30 +121,10 @@
                 </div>
 
                 <ul>
-                  <li>
+                  <li v-for="(item, id) in list2" :key="id">
                     <i></i>
-                    <span>一般隐患</span>
-                    <span>1200</span>
-                  </li>
-                  <li>
-                    <i></i>
-                    <span>重大隐患</span>
-                    <span>1500</span>
-                  </li>
-                  <li>
-                    <i></i>
-                    <span>未整改一般隐患</span>
-                    <span>1100</span>
-                  </li>
-                  <li>
-                    <i></i>
-                    <span>未整改重大隐患</span>
-                    <span>300</span>
-                  </li>
-                  <li>
-                    <i></i>
-                    <span>到期证书</span>
-                    <span>800</span>
+                    <span>{{ item.name }}</span>
+                    <span>{{ item.val }}</span>
                   </li>
                 </ul>
               </div>
@@ -197,7 +164,7 @@
               <div
                 id="main"
                 ref="callThePolice"
-                style="width: 100%; height: 114px"
+                style="width: 100%; height: 120px"
               ></div>
             </div>
           </div>
@@ -229,25 +196,10 @@
                 </div>
 
                 <ul>
-                  <li>
+                  <li v-for="(item, id) in list3" :key="id">
                     <i></i>
-                    <span>重大风险</span>
-                    <span>52</span>
-                  </li>
-                  <li>
-                    <i></i>
-                    <span>较大风险</span>
-                    <span>15</span>
-                  </li>
-                  <li>
-                    <i></i>
-                    <span>一般风险</span>
-                    <span>51</span>
-                  </li>
-                  <li>
-                    <i></i>
-                    <span>低风险</span>
-                    <span>42</span>
+                    <span>{{ item.name }}</span>
+                    <span>{{ item.val }}</span>
                   </li>
                 </ul>
               </div>
@@ -266,6 +218,25 @@ export default {
   data() {
     return {
       value1: "",
+      list1: [
+        { name: "一级", val: "52" },
+        { name: "二级", val: "15" },
+        { name: "三级", val: "51" },
+        { name: "四级", val: "42" },
+      ],
+      list2: [
+        { name: "一般隐患", val: "1200" },
+        { name: "重大隐患", val: "1500" },
+        { name: "未整改一般隐患", val: "1100" },
+        { name: "未整改重大隐患", val: "300" },
+        { name: "到期证书", val: "800" },
+      ],
+      list3: [
+        { name: "重大风险", val: "52" },
+        { name: "较大风险", val: "15" },
+        { name: "一般风险", val: "51" },
+        { name: "低风险", val: "42" },
+      ],
     };
   },
   methods: {
@@ -321,6 +292,7 @@ export default {
         yAxspLine: true,
         yAxMin: 0,
         yAxMax: 200,
+        yAxsplitNum: 3,
         xAxisData: ["储罐", "监测泄漏点", "生产装置", "仓库"],
         seriesData: [130, 180, 140, 110],
       };
@@ -332,7 +304,7 @@ export default {
       let option = {
         EChart: myChart,
         // legendShow:true,
-        titlText:"总数\n186",
+        titlText: "总数\n186",
         yAxspLine: true,
         yAxMin: 0,
         yAxMax: 200,

@@ -85,6 +85,7 @@ export function singleBar(val) {
             splitLine: {
                 lineStyle: {
                     type: 'dashed',
+                    color: "rgba(255, 255, 255, 0.3)"
                 },
             },
             axisLabel: {
@@ -277,7 +278,7 @@ export function BasicsLine(val) {
             type: 'value',
             min: val.yAxMin,
             max: val.yAxMax,
-            splitNumber: val.yAxsplitNum ? val.yAxsplitNum : 4,
+            splitNumber: val.yAxsplitNum,
             splitLine: {
                 show: val.yAxspLine, //刻度线
                 lineStyle: {
