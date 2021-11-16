@@ -1,6 +1,6 @@
 <template>
-  <div class="hello" style="overflow:hidden">
-    <div id="container"></div>
+  <div class="hello" style="overflow: hidden">
+    <div id="container2"></div>
   </div>
 </template>
 
@@ -17,6 +17,7 @@ Highcharts3D(Highcharts);
 export default {
   name: "HelloWorld",
   props: {
+    data: Array,
     msg: String,
   },
   mounted() {
@@ -28,10 +29,10 @@ export default {
         this.chart.destroy();
       }
       // 初始化 Highcharts 图表
-      var chart = Highcharts.chart("container", {
+      var chart = Highcharts.chart("container2", {
         chart: {
           type: "pie",
-          height: 328,
+          height: 250,
           width: 328,
           backgroundColor: "rgba(0,0,0,0)",
           options3d: {
@@ -42,6 +43,9 @@ export default {
         },
         title: {
           text: "",
+        },
+        credits: {
+          enabled: false, //不显示LOGO
         },
         tooltip: {
           pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>",
@@ -60,27 +64,37 @@ export default {
             depth: 35,
             dataLabels: {
               enabled: true,
-              format: "{point.name}",
+              // format: "{point.name}",
+              // format: '<p>{point.name}:</p><p>{point.percentage:.1f} %</p>',
+              style: {
+                color: "#FFF",
+                textOutline: "none",
+              },
+              useHTML: true, //使用formatter内的标签和样式
+              formatter: function () {
+                //this 为当前的点（扇区）对象，可以通过  console.log(this) 来查看详细信息
+                console.log(this);
+                return (
+                  '<div><p style="color: #ccf9ff;">' +
+                  this.point.name +
+                  "</p>" +
+                  '<p><span style="font-size: 14px;margin-right: 4px;">' +
+                  this.y +
+                  '<p style="font-size: 14px;color: ' +
+                  this.point.color +
+                  '">' +
+                  this.percentage.toFixed(1) +
+                  "%</p></div>"
+                );
+              },
             },
           },
         },
         series: [
           {
             type: "pie",
-            name: "浏览器占比",
-            data: [
-              ["Firefox", 45.0],
-              ["IE", 26.8],
-              {
-                name: "Chrome",
-                y: 12.8,
-                sliced: true,
-                selected: true,
-              },
-              ["Safari", 8.5],
-              ["Opera", 6.2],
-              ["Others", 0.7],
-            ],
+            name: "人数占比(人)",
+            data: this.data,
           },
         ],
       });

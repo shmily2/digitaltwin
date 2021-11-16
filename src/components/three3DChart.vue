@@ -1,5 +1,5 @@
 <template>
-  <div class="hello" style="overflow:hidden">
+  <div class="hello" style="overflow: hidden">
     <div id="container"></div>
   </div>
 </template>
@@ -17,10 +17,12 @@ Highcharts3D(Highcharts);
 export default {
   name: "HelloWorld",
   props: {
+    data:Array,
     msg: String,
   },
   mounted() {
     this.moreChart();
+    
   },
   methods: {
     moreChart() {
@@ -31,7 +33,7 @@ export default {
       var chart = Highcharts.chart("container", {
         chart: {
           type: "pie",
-          height: 328,
+          height: 250,
           width: 328,
           backgroundColor: "rgba(0,0,0,0)",
           options3d: {
@@ -39,6 +41,9 @@ export default {
             alpha: 45,
             beta: 0,
           },
+        },
+        credits: {
+          enabled: false, //不显示LOGO
         },
         title: {
           text: "",
@@ -60,27 +65,37 @@ export default {
             depth: 35,
             dataLabels: {
               enabled: true,
-              format: "{point.name}",
+              // format: "{point.name}",
+              // format: '<p>{point.name}:</p><p>{point.percentage:.1f} %</p>',
+              style: {
+                color: "#FFF",
+                textOutline: "none",
+              },
+              useHTML: true, //使用formatter内的标签和样式
+              formatter: function () {
+                //this 为当前的点（扇区）对象，可以通过  console.log(this) 来查看详细信息
+                console.log(this);
+                return (
+                  '<div><p style="color: #ccf9ff;">' +
+                  this.point.name +
+                  "</p>" +
+                  '<p><span style="font-size: 14px;margin-right: 4px;">' +
+                  this.y +
+                  '<p style="font-size: 14px;color: ' +
+                  this.point.color +
+                  '">' +
+                  this.percentage.toFixed(1) +
+                  "%</p></div>"
+                );
+              },
             },
           },
         },
         series: [
           {
             type: "pie",
-            name: "浏览器占比",
-            data: [
-              ["Firefox", 45.0],
-              ["IE", 26.8],
-              {
-                name: "Chrome",
-                y: 12.8,
-                sliced: true,
-                selected: true,
-              },
-              ["Safari", 8.5],
-              ["Opera", 6.2],
-              ["Others", 0.7],
-            ],
+            name: "应急装备(套)",
+            data: this.data,
           },
         ],
       });

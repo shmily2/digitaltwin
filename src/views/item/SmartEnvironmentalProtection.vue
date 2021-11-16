@@ -118,8 +118,8 @@
     <div class="right">
       <div class="chartsTitle">
         <div class="chartsTitle-font">
-          <span class="chartsTitle-font--big">水质类别月度分析</span>
-          <span class="chartsTitle-font--small">/ Monthly analysis</span>
+          <span class="chartsTitle-font--big">统计分析</span>
+          <span class="chartsTitle-font--small">/ Statistical Analysis</span>
         </div>
         <div class="chartsTitle-img"></div>
       </div>

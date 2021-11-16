@@ -53,7 +53,7 @@
             <div class="chartsTitle-img"></div>
           </div>
           <div class="charts">
-            <threeDChart2></threeDChart2>
+            <threeDChart :data="threeD"></threeDChart>
           </div>
         </div>
       </div>
@@ -64,7 +64,7 @@
             :class="iconClicked == 1 ? 'icon_item_active' : 'icon_item'"
           >
             <img
-              src="@/assets/icons/environmentProtect/1.png"
+              src="@/assets/icons/IntelligentSafetySupervision/1.png"
               width="20px"
               height="20px"
               alt=""
@@ -75,7 +75,7 @@
             :class="iconClicked == 2 ? 'icon_item_active' : 'icon_item'"
           >
             <img
-              src="@/assets/icons/environmentProtect/2.png"
+              src="@/assets/icons/IntelligentSafetySupervision/2.png"
               width="20px"
               height="20px"
               alt=""
@@ -86,7 +86,7 @@
             :class="iconClicked == 3 ? 'icon_item_active' : 'icon_item'"
           >
             <img
-              src="@/assets/icons/environmentProtect/3.png"
+              src="@/assets/icons/IntelligentSafetySupervision/3.png"
               width="20px"
               height="20px"
               alt=""
@@ -97,7 +97,29 @@
             :class="iconClicked == 4 ? 'icon_item_active' : 'icon_item'"
           >
             <img
-              src="@/assets/icons/environmentProtect/4.png"
+              src="@/assets/icons/IntelligentSafetySupervision/4.png"
+              width="20px"
+              height="20px"
+              alt=""
+            />
+          </div>
+          <div
+            @click="iconClick(5)"
+            :class="iconClicked == 5 ? 'icon_item_active' : 'icon_item'"
+          >
+            <img
+              src="@/assets/icons/IntelligentSafetySupervision/5.png"
+              width="20px"
+              height="20px"
+              alt=""
+            />
+          </div>
+          <div
+            @click="iconClick(6)"
+            :class="iconClicked == 6 ? 'icon_item_active' : 'icon_item'"
+          >
+            <img
+              src="@/assets/icons/IntelligentSafetySupervision/6.png"
               width="20px"
               height="20px"
               alt=""
@@ -117,7 +139,7 @@
             <div class="chartsTitle-img"></div>
           </div>
           <div class="charts">
-            <threeDChart></threeDChart>
+            <threeDChart2 :data="threeD2"></threeDChart2>
           </div>
         </div>
         <div class="charts_2">
@@ -167,13 +189,37 @@
 <script>
 import { BasicsBar, singleBar, pie, waterFall } from "@/utils/charts/index.js";
 import threeDChart from "@/components/three3DChart.vue";
-import threeDChart2 from "@/components/three3DChart.vue";
+import threeDChart2 from "@/components/three3DChart2.vue";
 import * as echarts from "echarts";
 export default {
   name: "Index",
   components: { threeDChart, threeDChart2 },
   data() {
     return {
+      threeD: [
+        {
+          name: "园区",
+          y: 990,
+          color: "#1879F0",
+        },
+        {
+          name: "企业",
+          y: 3590,
+          color: "#8BBFFF",
+        },
+      ],
+      threeD2: [
+        {
+          name: "园区",
+          y: 990,
+          color: "#1879F0",
+        },
+        {
+          name: "企业",
+          y: 3590,
+          color: "#8BBFFF",
+        },
+      ],
       iconClicked: 1,
       date: {
         year: "",
@@ -259,9 +305,15 @@ export default {
       _this.myChart2.resize();
       _this.myChart4.resize();
       _this.myChart5.resize();
+      _this.removeHightchartsLogo();
     });
   },
   methods: {
+    removeHightchartsLogo() {
+      var high = document.getElementsByClassName("highcharts-credits")[0];
+      console.log(high);
+      high.style.display = "none";
+    },
     iconClick(type) {
       this.iconClicked = type;
     },
@@ -515,7 +567,7 @@ export default {
       .left_iconList {
         width: 100%;
         position: absolute;
-        height: 280px;
+        height: 420px;
         bottom: 60px;
         .icon_item {
           cursor: pointer;
