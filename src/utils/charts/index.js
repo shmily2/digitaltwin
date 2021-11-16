@@ -306,6 +306,110 @@ export function waterFall(val) {
 }
 
 
+// Area chart
+export function AreaChart(val) {
+    let option = {
+        color: ['#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'],
+        title: {
+            text: ''
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                label: {
+                    backgroundColor: '#6a7985'
+                }
+            }
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'left',
+            show: false,
+            // data: ['Line 1', 'Line 2', 'Line 3', 'Line 4', 'Line 5']
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            top: "16%",
+            containLabel: true
+        },
+        xAxis: [
+            {
+                type: 'category',
+                boundaryGap: false,
+                data: ['0', '3', '6', '9', '12', '15', '18', '21', '24'],
+                axisLabel: {
+                    show: true,
+                    textStyle: {
+                        color: '#fff',
+                        fontSize: '12'
+                    }
+                },
+            }
+        ],
+        yAxis: {
+            type: 'value',
+            splitLine: {
+                lineStyle: {
+                    type: 'dashed',
+                    color: "rgba(255, 255, 255, 0.3)"
+                },
+
+            },
+            axisLabel: {
+                show: true,
+                textStyle: {
+                    color: '#fff',
+                    fontSize: '12'
+                },
+                // formatter: '{value} %'
+            },
+
+        },
+        series: [
+            {
+                name: '车辆流量(辆)',
+                type: 'line',
+                stack: 'Total',
+                smooth: true,
+                lineStyle: {
+                    width: 0
+                },
+                showSymbol: false,
+                areaStyle: {
+                    opacity: 0.8,
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                        {
+                            offset: 0,
+                            color: '#1879F0'
+                        },
+                        {
+                            offset: 0.4,
+                            color: '#8BBFFF'
+                        },
+                        {
+                            offset: 1,
+                            color: 'transparent'
+                        }
+                    ])
+                },
+                emphasis: {
+                    focus: 'series'
+                },
+                data: [200, 150, 300, 280, 410, 460, 150,70,100]
+            },
+
+        ]
+    };
+    val.EChart.setOption(option);
+}
 
 
 

@@ -8,25 +8,27 @@
     <div class="left">
       <div class="charts-div">
         <div class="charts_1">
-          <!-- chartsTitle -->
-          <div class="chartsTitle">
-            <div class="chartsTitle-font">
-              <span class="chartsTitle-font--big">水质类别月度分析</span>
-              <span class="chartsTitle-font--small">/ Monthly analysis</span>
-            </div>
-            <div class="chartsTitle-img"></div>
+          <!-- 海康 -->
+          <div class="video">
+            <preview :dataStream="dataStream"></preview>
           </div>
-
-          <!-- charts -->
-          <div class="charts">
-            <div style="width: 100%; height: 100%" ref="chartColumn"></div>
+          <!-- 轮播 -->
+          <div class="scrollTable">
+            <dv-scroll-board
+              @click="rowData"
+              :config="config"
+              class="scrollBoard_style"
+              style="width: 100%; height: 100%"
+            />
           </div>
         </div>
         <div class="charts_2">
           <div class="chartsTitle">
             <div class="chartsTitle-font">
-              <span class="chartsTitle-font--big">水质类别占比</span>
-              <span class="chartsTitle-font--small">/ Category Proportion</span>
+              <span class="chartsTitle-font--big">车辆类型统计</span>
+              <span class="chartsTitle-font--small"
+                >/ Vehicle type statistics</span
+              >
             </div>
             <div class="chartsTitle-img"></div>
           </div>
@@ -37,15 +39,27 @@
         <div class="charts_3">
           <div class="chartsTitle">
             <div class="chartsTitle-font">
-              <span class="chartsTitle-font--big">污染指数占比</span>
-              <span class="chartsTitle-font--small"
-                >/ Percentage of pollut</span
-              >
+              <span class="chartsTitle-font--big">告警统计</span>
+              <span class="chartsTitle-font--small">/ Alarm statistics</span>
             </div>
             <div class="chartsTitle-img"></div>
           </div>
-          <div class="charts">
-            <div style="width: 100%; height: 100%" ref="chartSingleBar2"></div>
+          <div class="chart1_main">
+            <div class="chart">
+              <div ref="chartPie1" style="width: 100%; height: 100%"></div>
+            </div>
+            <div class="chartList">
+              <div
+                class="chartList-item"
+                v-for="(item, index) in leftCharts.chart1"
+                :key="index"
+              >
+                <div class="index" :style="{ background: item.color }"></div>
+                <div style="width: 50%">{{ item.type }}</div>
+                <div style="width: 25%">{{ item.num }}</div>
+                <div style="width: 25%">{{ item.percent }}</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -99,102 +113,42 @@
       </div>
     </div>
     <div class="right">
-      <div class="chartsTitle">
-        <div class="chartsTitle-font">
-          <span class="chartsTitle-font--big">统计分析</span>
-          <span class="chartsTitle-font--small">/ Statistical Analysis</span>
+      <div class="charts_1">
+        <!-- 海康 -->
+        <div class="video">
+          <preview2 :dataStream="dataStream2"></preview2>
         </div>
-        <div class="chartsTitle-img"></div>
-      </div>
-      <div class="select2">
-        <div class="label">监测点：</div>
-        <div class="options">
-          <el-select v-model="chartsList[0].form.value" placeholder="请选择">
-            <el-option
-              v-for="item in chartsList[0].form.options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            >
-            </el-option>
-          </el-select>
+        <!-- 轮播 -->
+        <div class="scrollTable">
+          <dv-scroll-board
+            @click="rowData"
+            :config="config"
+            class="scrollBoard_style"
+            style="width: 100%; height: 100%"
+          />
         </div>
       </div>
-      <div class="date">
-        <div class="select">
-          <div class="done" @click="forward">《</div>
-          <div class="select_main">
-            <div class="year">{{ date.year }}年</div>
-            <div
-              v-if="dateType !== 'year' && dateType == 'quarterly'"
-              class="quarter"
+      <div class="charts_2">
+        <div class="chartsTitle">
+          <div class="chartsTitle-font">
+            <span class="chartsTitle-font--big">车辆流量统计</span>
+            <span class="chartsTitle-font--small"
+              >/ Vehicle flow statistics</span
             >
-              第{{ date.quarter }}季度
-            </div>
-            <div
-              v-if="dateType !== 'year' && dateType == 'month'"
-              class="month"
-            >
-              {{ date.month > 9 ? date.month : "0" + date.month }}月
-            </div>
           </div>
-          <div class="done" @click="backward">》</div>
+          <div class="chartsTitle-img"></div>
         </div>
-        <div class="item">
-          <div
-            @click="chooseDateType('year')"
-            :class="dateType == 'year' ? 'itemType_active' : 'itemType'"
-            style="border-top-left-radius: 4px; border-bottom-left-radius: 4px"
-          >
-            年度
-          </div>
-          <div
-            @click="chooseDateType('quarterly')"
-            :class="dateType == 'quarterly' ? 'itemType_active' : 'itemType'"
-            class="itemType"
-          >
-            季度
-          </div>
-          <div
-            @click="chooseDateType('month')"
-            :class="dateType == 'month' ? 'itemType_active' : 'itemType'"
-            class="itemType"
-            style="
-              border-top-right-radius: 4px;
-              border-bottom-right-radius: 4px;
-            "
-          >
-            月份
-          </div>
+        <div class="charts">
+          <div style="width: 100%; height: 100%" ref="chartSingleBar3"></div>
         </div>
       </div>
-      <div class="chart1" style="margin-top: 12px">
-        <div class="chartsTitle2">
-          <div class="point"></div>
-          <div class="name">空气质量指数类别天数占比</div>
-        </div>
-        <div class="chart1_main">
-          <div class="chart">
-            <div ref="chartPie1" style="width: 100%; height: 100%"></div>
+      <div class="charts_3">
+        <div class="chartsTitle">
+          <div class="chartsTitle-font">
+            <span class="chartsTitle-font--big">摄像头分类</span>
+            <span class="chartsTitle-font--small">/ Camera classification</span>
           </div>
-          <div class="chartList">
-            <div
-              class="chartList-item"
-              v-for="(item, index) in rightCharts.chart1"
-              :key="index"
-            >
-              <div class="index" :style="{ background: item.color }"></div>
-              <div style="width: 50%">{{ item.type }}</div>
-              <div style="width: 25%">{{ item.num }}</div>
-              <div style="width: 25%">{{ item.percent }}</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="chart2">
-        <div class="chartsTitle2">
-          <div class="point"></div>
-          <div class="name">首要污染物天数占比</div>
+          <div class="chartsTitle-img"></div>
         </div>
         <div class="chart1_main">
           <div class="chart">
@@ -203,24 +157,14 @@
           <div class="chartList">
             <div
               class="chartList-item"
-              v-for="(item, index) in rightCharts.chart2"
+              v-for="(item, index) in rightCharts.chart1"
               :key="index"
             >
               <div class="index" :style="{ background: item.color }"></div>
-              <div style="width: 50%">{{ item.type }}</div>
-              <div style="width: 25%">{{ item.num }}</div>
-              <div style="width: 25%">{{ item.percent }}</div>
+              <div style="width: 80%">{{ item.type }}</div>
+              <div style="width: 20%">{{ item.num }}</div>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="chart3">
-        <div class="chartsTitle2">
-          <div class="point"></div>
-          <div class="name">AQI最差时段</div>
-        </div>
-        <div class="chartBox">
-          <div ref="myChart6" style="width: 100%; height: 100%"></div>
         </div>
       </div>
     </div>
@@ -228,94 +172,104 @@
 </template>
 
 <script>
-import { ColumnBar, singleBar, pie, waterFall } from "@/utils/charts/index.js";
+import {
+  ColumnBar,
+  singleBar,
+  pie,
+  waterFall,
+  AreaChart,
+} from "@/utils/charts/index.js";
+import preview from "@/components/preview.vue";
+import preview2 from "@/components/preview2.vue";
 import * as echarts from "echarts";
 export default {
   name: "Index",
+  components: {
+    preview,
+    preview2,
+  },
   data() {
     return {
+      dataStream: "",
+      dataStream2: "",
+      config: {
+        indexHeader: "序号",
+        index: true,
+        headerBGC: " rgba(33, 33, 33, 0.3)",
+        oddRowBGC: "transparent",
+        evenRowBGC: "transparent",
+        // columnWidth: [60],
+        rowNum: 6,
+        header: ["姓名", "温度"],
+        data: [
+          ["杨海清", "36.5°C"],
+          ["杨平", "37.5°C"],
+          ["韩刚龙", "37.2°C"],
+          ["陈桂平", '<span style="color:red;">39.5°C</span>'],
+          ["刘再海", "37.5°C"],
+          ["刘梅冉", "37.5°C"],
+          ["李佐伊", "37.5°C"],
+          ["杨海清", "36.5°C"],
+          ["杨平", "37.5°C"],
+          ["韩刚龙", "37.2°C"],
+        ],
+        align: ["center"],
+      },
+
       iconClicked: 1,
       date: {
         year: "",
         quarter: "",
         month: "",
       },
+      leftCharts: {
+        chart1: [
+          {
+            color: "#1879F0",
+            type: "违停",
+            num: 620,
+            percent: "70%",
+          },
+          {
+            color: "#8BBFFF",
+            type: "入园超时",
+            num: 350,
+            percent: "30%",
+          },
+        ],
+      },
 
       rightCharts: {
         chart1: [
           {
             color: "#1879F0",
-            type: "优",
-            num: 100,
-            percent: "11%",
-          },
-          {
-            color: "#3885E4",
-            type: "良",
-            num: 125,
-            percent: "16%",
-          },
-          {
-            color: "#73AEF8",
-            type: "轻度污染",
-            num: 40,
-            percent: "4%",
-          },
-          {
-            color: "#8BBFFF",
-            type: "中度污染",
-            num: 85,
-            percent: "8%",
-          },
-          {
-            color: "#ABD1FF",
-            type: "重度污染",
-            num: 40,
-            percent: "4%",
-          },
-          {
-            color: "#D2E6FF",
-            type: "严重污染",
-            num: 85,
-            percent: "8%",
-          },
-        ],
-        chart2: [
-          {
-            color: "#1879F0",
-            type: "PM10",
-            num: 94,
+            type: "云台式摄像头",
+            num: 200,
             percent: "86.24%",
           },
           {
             color: "#3885E4",
-            type: "PM2.5",
-            num: 21,
+            type: "枪型摄像头",
+            num: 147,
             percent: "8.26%",
           },
           {
             color: "#73AEF8",
-            type: "CO",
-            num: 26,
+            type: "鱼眼摄像头",
+            num: 436,
             percent: "1.83%",
           },
           {
             color: "#8BBFFF",
-            type: "SO2",
-            num: 31,
+            type: "球型摄像头",
+            num: 57,
             percent: "1.83%",
           },
           {
             color: "#ABD1FF",
-            type: "O3",
-            num: 41,
+            type: "半球型摄像头",
+            num: 199,
             percent: "1.83%",
-          },
-          {
-            color: "#D2E6FF",
-            type: "NO2",
-            num: 32,
-            percent: "0%",
           },
         ],
       },
@@ -325,8 +279,6 @@ export default {
       myChart2: "",
       myChart3: "",
       myChart4: "",
-      myChart5: "",
-      myChart6: "",
       screenWidth: document.body.clientWidth,
       chartsList: [
         {
@@ -358,12 +310,12 @@ export default {
       ),
     };
     this.$nextTick(() => {
-      this.initColumnChart();
-      this.initSingleBar();
-      this.initSingleBar2();
-      this.initPieChart1();
-      this.initPieChart2();
-      this.initWaterFall();
+      this.initSingleBar(); //1
+      this.initPieChart1(); //2
+      this.initAreaChart(); //3
+      // this.initSingleBar2();
+      this.initPieChart2(); //4
+      // this.initWaterFall();
     });
   },
   mounted() {
@@ -373,63 +325,33 @@ export default {
       _this.myChart2.resize();
       _this.myChart3.resize();
       _this.myChart4.resize();
-      _this.myChart5.resize();
-      _this.myChart6.resize();
     });
   },
   methods: {
-    forward() {
-      if (this.dateType == "year") {
-        this.date.year--;
-      } else if (this.dateType == "quarterly") {
-        if (this.date.quarter - 1 !== 0) {
-          this.date.quarter--;
-        } else {
-          this.date.year--;
-          this.date.quarter = 4;
-        }
-      } else if (this.dateType == "month") {
-        if (this.date.month - 1 !== 0) {
-          this.date.month--;
-        } else {
-          this.date.year--;
-          this.date.month = 12;
-        }
-      }
-    },
-    backward() {
-      if (this.dateType == "year") {
-        this.date.year++;
-      } else if (this.dateType == "quarterly") {
-        if (this.date.quarter + 1 !== 5) {
-          this.date.quarter++;
-        } else {
-          this.date.year++;
-          this.date.quarter = 1;
-        }
-      } else if (this.dateType == "month") {
-        if (this.date.month + 1 !== 13) {
-          this.date.month++;
-        } else {
-          this.date.year++;
-          this.date.month = 1;
-        }
-      }
-    },
-    chooseDateType(type) {
-      this.dateType = type;
-    },
+    rowData(row) {},
+
     iconClick(type) {
       this.iconClicked = type;
     },
+    // 区域图
+    initAreaChart() {
+      this.myChart3 = echarts.init(this.$refs.chartSingleBar3);
+      let data = {
+        EChart: this.myChart3,
+        name: "",
+        xAxisVal: [],
+        seriesData: this.formatterPie(this.leftCharts.chart1),
+      };
+      AreaChart(data);
+    },
     // 饼状图
     initPieChart1() {
-      this.myChart4 = echarts.init(this.$refs.chartPie1);
+      this.myChart2 = echarts.init(this.$refs.chartPie1);
       let data = {
-        EChart: this.myChart4,
+        EChart: this.myChart2,
         name: "",
-        xAxisVal: ["Ⅲ类", "Ⅴ类", "劣Ⅴ类"],
-        seriesData: this.formatterPie(this.rightCharts.chart1),
+        xAxisVal: [],
+        seriesData: this.formatterPie(this.leftCharts.chart1),
       };
       pie(data);
     },
@@ -448,133 +370,24 @@ export default {
       });
       return result;
     },
-    // 瀑布图
-    initWaterFall() {
-      this.myChart6 = echarts.init(this.$refs.myChart6);
-      let data = {
-        EChart: this.myChart6,
-        name: "",
-        xAxisVal: ["Ⅰ级", "Ⅱ级", "Ⅲ级", "Ⅳ级", "Ⅴ级", "Ⅵ级"],
-        seriesData1: [0, 1.4, 0.4, 0.9, 1.9, 0],
-        seriesData2: [0, 0.2, 0.2, 0.2, 0.2, 0],
-      };
-      waterFall(data);
-    },
     initPieChart2() {
-      this.myChart5 = echarts.init(this.$refs.chartPie2);
+      this.myChart4 = echarts.init(this.$refs.chartPie2);
       let data = {
-        EChart: this.myChart5,
+        EChart: this.myChart4,
         name: "",
         xAxisVal: ["Ⅲ类", "Ⅴ类", "劣Ⅴ类"],
-        seriesData: this.formatterPie(this.rightCharts.chart2),
+        seriesData: this.formatterPie(this.rightCharts.chart1),
       };
       pie(data);
     },
-    initColumnChart() {
-      this.myChart = echarts.init(this.$refs.chartColumn);
-      // 进行数据请求
-      let data = {
-        // name: "2021年绿色指标监控变动比率排名",
-        name: "",
-        xAxis: ["4月", "5月", "6月", "7月", "8月", "9月", "10月"],
-        seriesData: [
-          {
-            name: "Ⅰ类",
-            type: "bar",
-            stack: "Ad",
-            barWidth: 16, //柱图宽度
-            emphasis: {
-              focus: "series",
-            },
-            itemStyle: {
-              normal: {
-                color: "#1879F0",
-              },
-            },
-            data: [120, 132, 101, 134, 90, 230, 210],
-          },
-          {
-            name: "Ⅱ类",
-            type: "bar",
-            stack: "Ad",
-            emphasis: {
-              focus: "series",
-            },
-            itemStyle: {
-              normal: {
-                color: "#3885E4",
-              },
-            },
-            data: [120, 132, 101, 134, 90, 230, 210],
-          },
-          {
-            name: "Ⅲ类",
-            type: "bar",
-            stack: "Ad",
-            emphasis: {
-              focus: "series",
-            },
-            itemStyle: {
-              normal: {
-                color: "#73AEF8",
-              },
-            },
-            data: [120, 132, 101, 134, 90, 230, 210],
-          },
-          {
-            name: "Ⅳ类",
-            type: "bar",
-            stack: "Ad",
-            emphasis: {
-              focus: "series",
-            },
-            itemStyle: {
-              normal: {
-                color: "#8BBFFF",
-              },
-            },
-            data: [120, 132, 101, 134, 90, 230, 210],
-          },
-          {
-            name: "Ⅴ类",
-            type: "bar",
-            stack: "Ad",
-            emphasis: {
-              focus: "series",
-            },
-            itemStyle: {
-              normal: {
-                color: "#ABD1FF",
-              },
-            },
-            data: [220, 182, 191, 234, 290, 330, 310],
-          },
-          {
-            name: "劣Ⅴ类",
-            type: "bar",
-            stack: "Ad",
-            emphasis: {
-              focus: "series",
-            },
-            itemStyle: {
-              normal: {
-                color: "#D2E6FF",
-              },
-            },
-            data: [150, 232, 201, 154, 190, 330, 410],
-          },
-        ],
-        EChart: this.myChart,
-      };
-      ColumnBar(data);
-    },
+
     initSingleBar() {
-      this.myChart2 = echarts.init(this.$refs.chartSingleBar);
+      this.myChart = echarts.init(this.$refs.chartSingleBar);
       let data = {
-        EChart: this.myChart2,
+        EChart: this.myChart,
         name: "",
-        xAxisVal: ["Ⅲ类", "Ⅴ类", "劣Ⅴ类"],
-        seriesData: [16.17, 33.3, 50, 100],
+        xAxisVal: ["乘用车", "客车", "商用车", "全挂牵引车"],
+        seriesData: [16.17, 33.3, 50, 70, 100],
       };
       singleBar(data);
     },
@@ -605,6 +418,11 @@ export default {
   }
 }
 </style>
+<style scoped>
+.scrollBoard_style >>> .row-item:hover {
+  background: rgba(0, 119, 255, 0.3) !important;
+}
+</style>
 <style lang="scss" scoped>
 .environmentManage {
   width: 100%;
@@ -615,6 +433,12 @@ export default {
     width: 100%;
     height: 100%;
   }
+  .scrollBoard_style {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
+
   .chartsTitle {
     height: 30px;
     width: 100%;
@@ -696,7 +520,7 @@ export default {
     justify-content: space-between;
     // flex-direction: Column-reverse;
     .charts-div {
-      width: 358px;
+      width: 388px;
       height: 100%;
       // border: 1px solid blue;
       padding: 36px 0 36px 30px;
@@ -706,31 +530,17 @@ export default {
       align-items: center;
       .charts_1 {
         width: 100%;
-        height: 44%;
-        // border: 1px solid yellowgreen;
-        .select2 {
+        height: 50%;
+        .video {
           width: 100%;
-          height: 46px;
-          // border: 1px solid red;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
+          height: 200px;
+          border: 1px solid red;
           margin-bottom: 10px;
-          margin-top: 10px;
-          .label {
-            width: 20%;
-            height: 16px;
-            font-size: 16px;
-            font-family: SourceHanSansCN-Medium, SourceHanSansCN;
-            font-weight: 500;
-            color: #ffffff;
-            text-align: right;
-            line-height: 16px;
-          }
-          .options {
-            width: 80%;
-            height: 40px;
-          }
+        }
+        .scrollTable {
+          width: 100%;
+          height: calc(100% - 210px);
+          border: 1px solid red;
         }
         .charts {
           width: 100%;
@@ -740,7 +550,7 @@ export default {
       }
       .charts_2 {
         width: 100%;
-        height: 27.5%;
+        height: 24.5%;
         margin-top: 0.5%;
         .charts {
           width: 100%;
@@ -749,11 +559,45 @@ export default {
       }
       .charts_3 {
         width: 100%;
-        height: 27.5%;
+        height: 24.5%;
         margin-top: 0.5%;
-        .charts {
+        .chart1_main {
           width: 100%;
-          height: calc(100% - 36px);
+          height: calc(100% - 22px);
+          display: flex;
+          margin-top: 15px;
+          align-items: center;
+          .chart {
+            width: 50%;
+            height: 100%;
+          }
+          .chartList {
+            width: 50%;
+            height: 100%;
+            // padding: 10px 0;
+            box-sizing: border-box;
+            .chartList-item {
+              // opacity: 0.8;
+              border-bottom: 1px dashed rgba(255, 255, 255, 0.3);
+              display: flex;
+              font-size: 15px;
+              align-items: center;
+              .index {
+                border-radius: 5px;
+                width: 10px;
+                height: 10px;
+                margin-right: 8px;
+              }
+              div {
+                width: 33%;
+                opacity: 1;
+                color: #fff;
+                height: 26px;
+                line-height: 26px;
+                text-align: left;
+              }
+            }
+          }
         }
       }
     }
@@ -813,86 +657,44 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    .select2 {
+    .charts_1 {
       width: 100%;
-      height: 46px;
-      // border: 1px solid red;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 10px;
-      margin-top: 10px;
-      .label {
-        width: 20%;
-        height: 16px;
-        font-size: 16px;
-        font-family: SourceHanSansCN-Medium, SourceHanSansCN;
-        font-weight: 500;
-        color: #ffffff;
-        text-align: right;
-        line-height: 16px;
+      height: 50%;
+      .video {
+        width: 100%;
+        height: 200px;
+        border: 1px solid red;
+        margin-bottom: 10px;
       }
-      .options {
-        width: 80%;
-        height: 40px;
+      .scrollTable {
+        width: 100%;
+        height: calc(100% - 210px);
+        border: 1px solid red;
+      }
+      .charts {
+        width: 100%;
+        height: calc(100% - 100px);
+        // border: 1px solid yellowgreen;
       }
     }
-    .date {
+    .charts_2 {
       width: 100%;
-      height: 40px;
-      margin: 6px 0;
-      display: flex;
-      .select {
-        width: 50%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        .select_main {
-          display: flex;
-          height: 100%;
-          align-items: center;
-          margin: 0 14px;
-          color: #fff;
-        }
-        .done {
-          cursor: pointer;
-          color: #fff;
-        }
-      }
-      .item {
-        width: 50%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        border-radius: 4px;
-        .itemType {
-          width: 33.3%;
-          height: 36px;
-          color: #fff;
-          font-size: 14px;
-          background: rgba(255, 255, 255, 0.5);
-          line-height: 36px;
-          cursor: pointer;
-        }
-        .itemType_active {
-          width: 33.3%;
-          height: 36px;
-          color: #fff;
-          font-size: 14px;
-          background: #1879f0;
-          line-height: 36px;
-          cursor: pointer;
-        }
+      height: 24.5%;
+      margin-top: 0.5%;
+      .charts {
+        width: 100%;
+        height: calc(100% - 36px);
       }
     }
-    .chart1 {
+    .charts_3 {
       width: 100%;
-      height: 30%;
+      height: 24.5%;
+      margin-top: 0.5%;
       .chart1_main {
         width: 100%;
         height: calc(100% - 22px);
         display: flex;
+        margin-top: 15px;
         align-items: center;
         .chart {
           width: 50%;
@@ -925,54 +727,6 @@ export default {
             }
           }
         }
-      }
-    }
-    .chart2 {
-      width: 100%;
-      height: 30%;
-      .chart1_main {
-        width: 100%;
-        height: calc(100% - 22px);
-        display: flex;
-        align-items: center;
-        .chart {
-          width: 50%;
-          height: 100%;
-        }
-        .chartList {
-          width: 50%;
-          height: 100%;
-          // padding: 10px 0;
-          box-sizing: border-box;
-          .chartList-item {
-            border-bottom: 1px dashed rgba(255, 255, 255, 0.3);
-            display: flex;
-            font-size: 15px;
-            align-items: center;
-            .index {
-              border-radius: 5px;
-              width: 10px;
-              height: 10px;
-              margin-right: 8px;
-            }
-            div {
-              width: 33%;
-              opacity: 1;
-              color: #fff;
-              height: 26px;
-              line-height: 26px;
-              text-align: left;
-            }
-          }
-        }
-      }
-    }
-    .chart3 {
-      width: 100%;
-      height: 30%;
-      .chartBox {
-        width: 100%;
-        height: calc(100% - 36px);
       }
     }
   }
