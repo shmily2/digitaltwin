@@ -100,7 +100,12 @@
           </div>
         </div>
 
-        <div style="red;font-size:90px">423423423</div>
+        <ul class="icon-btn">
+          <li>
+            <img src="../../assets/icons/synthesis/monitoring.png" alt="" />
+          </li>
+          <li><img src="../../assets/icons/synthesis/house.png" alt="" /></li>
+        </ul>
       </div>
 
       <div class="right">
@@ -469,6 +474,7 @@ export default {
     height: 100%;
     box-sizing: border-box;
     padding: 0 30px;
+    position: relative;
     .content {
       width: 357px;
       height: calc(100% - 105px);
@@ -478,12 +484,25 @@ export default {
         .item-box {
           width: 100%;
           height: 170px;
-          // border: 2px solid yellow;
           padding-top: 5px;
         }
       }
     }
 
+    .icon-btn {
+      width: 55px;
+      position: absolute;
+      bottom: 210px;
+      right: -25px;
+      li {
+        height: 70px;
+        width: 55px;
+        overflow: hidden;
+        img {
+          margin-left: -10px;
+        }
+      }
+    }
     .slider {
       width: calc(100% - 60px);
       margin: 30px;
