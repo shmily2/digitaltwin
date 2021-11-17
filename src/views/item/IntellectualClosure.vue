@@ -534,13 +534,13 @@ export default {
         .video {
           width: 100%;
           height: 200px;
-          border: 1px solid red;
+          // border: 1px solid red;
           margin-bottom: 10px;
         }
         .scrollTable {
           width: 100%;
           height: calc(100% - 210px);
-          border: 1px solid red;
+          // border: 1px solid red;
         }
         .charts {
           width: 100%;
@@ -663,13 +663,13 @@ export default {
       .video {
         width: 100%;
         height: 200px;
-        border: 1px solid red;
+        // border: 1px solid red;
         margin-bottom: 10px;
       }
       .scrollTable {
         width: 100%;
         height: calc(100% - 210px);
-        border: 1px solid red;
+        // border: 1px solid red;
       }
       .charts {
         width: 100%;
