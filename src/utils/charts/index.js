@@ -24,13 +24,13 @@ export function ColumnBar(val) {
         },
         xAxis: [
             {
-            type: 'category',
-            data: val.xAxis,
-            axisLabel: {
-                show: true,
-                textStyle: {
-                    color: '#fff',
-                    fontSize: '12'
+                type: 'category',
+                data: val.xAxis,
+                axisLabel: {
+                    show: true,
+                    textStyle: {
+                        color: '#fff',
+                        fontSize: '12'
                     }
                 },
             }
@@ -105,8 +105,7 @@ export function singleBar(val) {
             },
 
         },
-        series: [
-            {
+        series: [{
             itemStyle: {
                 normal: {
                     color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [{
@@ -124,7 +123,6 @@ export function singleBar(val) {
                             fontWeight: "bolder",
                             fontSize: "12",
                             color: "#fff"
-                            }
                         }
                     }
                 },
@@ -136,17 +134,15 @@ export function singleBar(val) {
                     color: '#de5df2'
                 }]),
             },
-            {
             barWidth: 22,//柱图宽度
             data: val.seriesData,
             type: 'bar',
-                // itemStyle: {
-                //     normal: {
-                //         color: 'rgba(255, 135, 0, 0.6)'
-                //     }
-                // }
-            }
-        ]
+            // itemStyle: {
+            //     normal: {
+            //         color: 'rgba(255, 135, 0, 0.6)'
+            //     }
+            // }
+        }]
     };
     val.EChart.setOption(option);
 }
@@ -414,6 +410,8 @@ export function AreaChart(val) {
     };
     val.EChart.setOption(option);
 }
+
+
 
 export function BasicsBar(val) {
     let option = {
@@ -1061,4 +1059,5 @@ export function moreLine(val) {
     }
         val.EChart.setOption(option);
 }
+
 
