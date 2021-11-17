@@ -100,7 +100,12 @@
           </div>
         </div>
 
-        <div style="red;font-size:90px">423423423</div>
+        <ul class="icon-btn">
+          <li>
+            <img src="../../assets/icons/synthesis/monitoring.png" alt="" />
+          </li>
+          <li><img src="../../assets/icons/synthesis/house.png" alt="" /></li>
+        </ul>
       </div>
 
       <div class="right">
@@ -469,6 +474,7 @@ export default {
     height: 100%;
     box-sizing: border-box;
     padding: 0 30px;
+    position: relative;
     .content {
       width: 357px;
       height: calc(100% - 105px);
@@ -478,12 +484,25 @@ export default {
         .item-box {
           width: 100%;
           height: 170px;
-          // border: 2px solid yellow;
           padding-top: 5px;
         }
       }
     }
 
+    .icon-btn {
+      width: 55px;
+      position: absolute;
+      bottom: 210px;
+      right: -25px;
+      li {
+        height: 70px;
+        width: 55px;
+        overflow: hidden;
+        img {
+          margin-left: -10px;
+        }
+      }
+    }
     .slider {
       width: calc(100% - 60px);
       margin: 30px;
@@ -599,19 +618,17 @@ export default {
       li:nth-child(1) i {
         background: rgba(51, 130, 231, 1);
       }
-
       li:nth-child(2) i {
-        background: rgba(56, 133, 228, 1);
+        background: rgba(0, 135, 235, 1);
       }
-
       li:nth-child(3) i {
-        background: rgba(115, 174, 248, 1);
+        background: rgba(95, 176, 254, 1);
       }
       li:nth-child(4) i {
-        background: rgba(139, 191, 255, 1);
+        background: rgba(161, 210, 255, 1);
       }
       li:nth-child(5) i {
-        background: rgba(139, 191, 255, 1);
+        background: rgba(205, 231, 255, 1);
       }
     }
   }
