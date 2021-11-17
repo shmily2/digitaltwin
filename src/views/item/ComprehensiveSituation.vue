@@ -618,19 +618,17 @@ export default {
       li:nth-child(1) i {
         background: rgba(51, 130, 231, 1);
       }
-
       li:nth-child(2) i {
-        background: rgba(56, 133, 228, 1);
+        background: rgba(0, 135, 235, 1);
       }
-
       li:nth-child(3) i {
-        background: rgba(115, 174, 248, 1);
+        background: rgba(95, 176, 254, 1);
       }
       li:nth-child(4) i {
-        background: rgba(139, 191, 255, 1);
+        background: rgba(161, 210, 255, 1);
       }
       li:nth-child(5) i {
-        background: rgba(139, 191, 255, 1);
+        background: rgba(205, 231, 255, 1);
       }
     }
   }

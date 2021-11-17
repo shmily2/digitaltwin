@@ -707,14 +707,15 @@ export default {
   z-index: 99;
   transform-origin: top;
 }
-::v-deep th:first-child > .cell {
-  padding-left: 15px !important;
-  text-align: left;
-}
-::v-deep .el-table_1_column_1 > .cell,
-::v-deep .el-table_2_column_6 > .cell {
+// ::v-deep th:first-child > .cell {
+
+::v-deep tr:nth-child(1) > th:first-child > .cell {
   text-align: right !important;
-  padding-right: 15px !important;
+  padding-right: 5px !important;
+}
+::v-deep tr:nth-child(2) > th:first-child  {
+  padding-left: 5px !important;
+  text-align: left;
 }
 
 .item-table {

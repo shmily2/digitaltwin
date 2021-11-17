@@ -1,4 +1,4 @@
-// import echarts from "echarts";
+
 const echarts = require('echarts')
 
 // 堆疊柱状图
@@ -37,17 +37,18 @@ export function ColumnBar(val) {
         ],
         yAxis: [
             {
-            type: 'value',
-            splitLine: {
-                lineStyle: {
-                    type: 'dashed'
+                type: 'value',
+                splitLine: {
+                    lineStyle: {
+                        type: 'dashed',
+                        color: "rgba(255, 255, 255, 0.3)"
                     }
                 },
-            axisLabel: {
-                show: true,
-                textStyle: {
-                    color: '#fff',
-                    fontSize: '12'
+                axisLabel: {
+                    show: true,
+                    textStyle: {
+                        color: '#fff',
+                        fontSize: '12'
                     }
                 },
             }
@@ -62,6 +63,7 @@ export function singleBar(val) {
     let option = {
         tooltip: {
             show: true,
+            formatter: '{b}:{c}%',
             axisPointer: {
                 type: 'shadow'
             }
@@ -91,59 +93,51 @@ export function singleBar(val) {
                     type: 'dashed',
                     color: "rgba(255, 255, 255, 0.3)"
                 },
+
             },
             axisLabel: {
                 show: true,
                 textStyle: {
                     color: '#fff',
                     fontSize: '12'
-                }
+                },
+                formatter: '{value} %'
             },
+
         },
         series: [
             {
             itemStyle: {
                 normal: {
-                    color: new echarts.graphic.LinearGradient(0,
-                        1,
-                        0,
-                        0,
-                        [
-                            {
-                                offset: 0,
-                                color: "transparent" // 0% 处的颜色
-                            },
-                            {
-                                offset: 1,
-                                color: "#1777EC" // 100% 处的颜色
-                            }
-                        ], false),
+                    color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [{
+                        offset: 0,
+                        color: "transparent" // 0% 处的颜色
+                    }, {
+                        offset: 1,
+                        color: "#1777EC" // 100% 处的颜色
+                    }], false),
                     label: {
                         show: true,
                         position: "top",
+                        formatter: '{c}%',
                         textStyle: {
-                            formatter: "{c}" + "人",
                             fontWeight: "bolder",
                             fontSize: "12",
                             color: "#fff"
                             }
                         }
-                    },
-                color: new echarts.graphic.LinearGradient(0,
-                    0,
-                    0,
-                    1,
-                    [
-                        {
-                            offset: 0,
-                            color: '#cd7cf3'
-                        },
-                        {
-                            offset: 1,
-                            color: '#de5df2'
-                        }
-                    ]),
+                    }
                 },
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                    offset: 0,
+                    color: '#cd7cf3'
+                }, {
+                    offset: 1,
+                    color: '#de5df2'
+                }]),
+            },
+            {
+            barWidth: 22,//柱图宽度
             data: val.seriesData,
             type: 'bar',
                 // itemStyle: {
@@ -156,6 +150,165 @@ export function singleBar(val) {
     };
     val.EChart.setOption(option);
 }
+
+
+export function pie(val) {
+    let option = {
+        title: {
+            text: 'Referer of a Website',
+            subtext: 'Fake Data',
+            left: 'center',
+            show: false
+        },
+        grid: {
+            x: 30,
+            y: 50,
+            x2: 0,
+            y2: 30,
+            borderWidth: 1,
+            // containLabel: true
+        },
+        tooltip: {
+            trigger: 'item'
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'left',
+            show: false,
+        },
+        series: [
+
+            {
+                name: val.name,
+                type: 'pie',
+                radius: '75%',
+                label: {
+                    normal: {
+                        show: false,
+                    },
+                },
+                labelLine: {
+                    normal: {
+                        show: false
+                    }
+                },
+                data: val.seriesData,
+                // [
+                //     {
+                //         value: 1048, name: 'Search Engine',
+                //         itemStyle: {
+                //             normal: {
+                //                 color: "#1879F0",
+                //             },
+                //         },
+                //     },
+                // ],
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+    val.EChart.setOption(option);
+}
+
+
+export function waterFall(val) {
+    let option = {
+        title: {
+            text: val.name,
+            // subtext: 'Living Expenses in Shenzhen'
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'shadow'
+            },
+            formatter: function (params) {
+                var tar = params[1];
+                return tar.name + '<br/>' + tar.seriesName + ' : ' + tar.value;
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            top: "6%",
+            containLabel: true
+        },
+        xAxis: {
+            type: 'category',
+            splitLine: { show: false },
+            axisLabel: {
+                show: true,
+                textStyle: {
+                    color: '#fff',
+                    fontSize: '12'
+                }
+            },
+            data: val.xAxisVal
+        },
+        yAxis: {
+            type: 'value',
+            splitLine: {
+                lineStyle: {
+                    type: 'dashed',
+                    color: "rgba(255, 255, 255, 0.3)"
+                },
+
+            },
+            axisLabel: {
+                show: true,
+                textStyle: {
+                    color: '#fff',
+                    fontSize: '12'
+                }
+            },
+        },
+        series: [
+            {
+                name: 'Placeholder',
+                type: 'bar',
+                stack: 'Total',
+                itemStyle: {
+                    borderColor: 'transparent',
+                    color: 'transparent'
+                },
+                emphasis: {
+                    itemStyle: {
+                        borderColor: 'transparent',
+                        color: 'transparent'
+                    }
+                },
+
+                data: val.seriesData1
+            },
+            {
+                name: 'Life Cost',
+                type: 'bar',
+                stack: 'Total',
+                label: {
+                    show: false,
+                    position: 'inside'
+                },
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                    offset: 0,
+                    color: '#1879F0',
+                }, {
+                    offset: 1,
+                    color: '#1879F0'
+                }]),
+                data: val.seriesData2
+            }
+        ]
+    };
+    val.EChart.setOption(option);
+}
+
 
 
 export function BasicsBar(val) {
@@ -355,12 +508,14 @@ export function BasicsPie(val) {
         },
         title: {
             text: val.titlText,
-            subtext: '',
+            subtext: val.subtext,
             top: 'center',
             left: 'center',
+            itemGap:2,
             textStyle: {
                 color: '#fff',
-                fontSize: '16',
+                fontSize: 16,
+                lineHeight:22,
             },
         },
         legend: {
@@ -802,3 +957,4 @@ export function moreLine(val) {
     }
         val.EChart.setOption(option);
 }
+

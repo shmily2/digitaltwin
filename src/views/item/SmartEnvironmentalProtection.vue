@@ -185,7 +185,7 @@
           </div>
         </div>
       </div>
-      <div class="chart1">
+      <div class="chart1" style="margin-top: 12px">
         <div class="chartsTitle2">
           <div class="point"></div>
           <div class="name">空气质量指数类别天数占比</div>
@@ -201,9 +201,9 @@
               :key="index"
             >
               <div class="index" :style="{ background: item.color }"></div>
-              <div style="width: 46%">{{ item.type }}</div>
-              <div>{{ item.num }}</div>
-              <div>{{ item.percent }}</div>
+              <div style="width: 50%">{{ item.type }}</div>
+              <div style="width: 25%">{{ item.num }}</div>
+              <div style="width: 25%">{{ item.percent }}</div>
             </div>
           </div>
         </div>
@@ -224,9 +224,9 @@
               :key="index"
             >
               <div class="index" :style="{ background: item.color }"></div>
-              <div style="width: 46%">{{ item.type }}</div>
-              <div>{{ item.num }}</div>
-              <div>{{ item.percent }}</div>
+              <div style="width: 50%">{{ item.type }}</div>
+              <div style="width: 25%">{{ item.num }}</div>
+              <div style="width: 25%">{{ item.percent }}</div>
             </div>
           </div>
         </div>
@@ -236,13 +236,16 @@
           <div class="point"></div>
           <div class="name">AQI最差时段</div>
         </div>
+        <div class="chartBox">
+          <div ref="myChart6" style="width: 100%; height: 100%"></div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { ColumnBar, singleBar, pie } from "@/utils/charts/index.js";
+import { ColumnBar, singleBar, pie, waterFall } from "@/utils/charts/index.js";
 import * as echarts from "echarts";
 export default {
   name: "Index",
@@ -304,31 +307,31 @@ export default {
           {
             color: "#3885E4",
             type: "PM2.5",
-            num: 9,
+            num: 21,
             percent: "8.26%",
           },
           {
             color: "#73AEF8",
             type: "CO",
-            num: 2,
+            num: 26,
             percent: "1.83%",
           },
           {
             color: "#8BBFFF",
             type: "SO2",
-            num: 2,
+            num: 31,
             percent: "1.83%",
           },
           {
             color: "#ABD1FF",
             type: "O3",
-            num: 2,
+            num: 41,
             percent: "1.83%",
           },
           {
             color: "#D2E6FF",
             type: "NO2",
-            num: 0,
+            num: 32,
             percent: "0%",
           },
         ],
@@ -340,6 +343,7 @@ export default {
       myChart3: "",
       myChart4: "",
       myChart5: "",
+      myChart6: "",
       screenWidth: document.body.clientWidth,
       chartsList: [
         {
@@ -376,6 +380,7 @@ export default {
       this.initSingleBar2();
       this.initPieChart1();
       this.initPieChart2();
+      this.initWaterFall();
     });
   },
   mounted() {
@@ -385,6 +390,8 @@ export default {
       _this.myChart2.resize();
       _this.myChart3.resize();
       _this.myChart4.resize();
+      _this.myChart5.resize();
+      _this.myChart6.resize();
     });
   },
   methods: {
@@ -457,6 +464,18 @@ export default {
         });
       });
       return result;
+    },
+    // 瀑布图
+    initWaterFall() {
+      this.myChart6 = echarts.init(this.$refs.myChart6);
+      let data = {
+        EChart: this.myChart6,
+        name: "",
+        xAxisVal: ["Ⅰ级", "Ⅱ级", "Ⅲ级", "Ⅳ级", "Ⅴ级", "Ⅵ级"],
+        seriesData1: [0, 1.4, 0.4, 0.9, 1.9, 0],
+        seriesData2: [0, 0.2, 0.2, 0.2, 0.2, 0],
+      };
+      waterFall(data);
     },
     initPieChart2() {
       this.myChart5 = echarts.init(this.$refs.chartPie2);
@@ -591,11 +610,15 @@ export default {
 </script>
 <style lang="scss">
 .environmentManage {
-  .el-input--suffix .el-input__inner {
-    padding-right: 30 px;
-    background: grey;
-    border: transparent;
-    color: #fff;
+  .el-input--suffix {
+    width: 170%;
+    margin-left: -50px;
+    .el-input__inner {
+      padding-right: 30 px;
+      background: grey;
+      border: transparent;
+      color: #fff;
+    }
   }
 }
 </style>
@@ -652,12 +675,12 @@ export default {
     }
   }
   .chartsTitle2 {
-    border: 1px solid red;
     width: 100%;
     height: 22px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    margin-bottom: 10px;
     .point {
       width: 10px;
       height: 10px;
@@ -708,7 +731,7 @@ export default {
           // border: 1px solid red;
           display: flex;
           align-items: center;
-          justify-content: center;
+          justify-content: space-between;
           margin-bottom: 10px;
           margin-top: 10px;
           .label {
@@ -722,7 +745,7 @@ export default {
             line-height: 16px;
           }
           .options {
-            width: 70%;
+            width: 80%;
             height: 40px;
           }
         }
@@ -794,7 +817,7 @@ export default {
     width: 440px;
     height: calc(100% - 66px);
     min-height: 870px;
-    border: 1px solid red;
+    // border: 1px solid red;
     background: linear-gradient(
       90deg,
       rgba(33, 33, 33, 0) 0%,
@@ -813,7 +836,7 @@ export default {
       // border: 1px solid red;
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: space-between;
       margin-bottom: 10px;
       margin-top: 10px;
       .label {
@@ -827,7 +850,7 @@ export default {
         line-height: 16px;
       }
       .options {
-        width: 70%;
+        width: 80%;
         height: 40px;
       }
     }
@@ -835,7 +858,6 @@ export default {
       width: 100%;
       height: 40px;
       margin: 6px 0;
-      border: 1px solid red;
       display: flex;
       .select {
         width: 50%;
@@ -883,7 +905,7 @@ export default {
     }
     .chart1 {
       width: 100%;
-      height: 26%;
+      height: 30%;
       .chart1_main {
         width: 100%;
         height: calc(100% - 22px);
@@ -892,28 +914,31 @@ export default {
         .chart {
           width: 50%;
           height: 100%;
-          border: 1px solid red;
         }
         .chartList {
           width: 50%;
           height: 100%;
-          padding: 20px 0;
+          // padding: 10px 0;
           box-sizing: border-box;
           .chartList-item {
-            opacity: 0.8;
-            border: 1px dashed rgba(255, 255, 255, 0.3);
+            // opacity: 0.8;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.3);
             display: flex;
-            font-size: 14px;
+            font-size: 15px;
             align-items: center;
             .index {
               border-radius: 5px;
               width: 10px;
               height: 10px;
+              margin-right: 8px;
             }
             div {
               width: 33%;
               opacity: 1;
               color: #fff;
+              height: 26px;
+              line-height: 26px;
+              text-align: left;
             }
           }
         }
@@ -921,7 +946,7 @@ export default {
     }
     .chart2 {
       width: 100%;
-      height: 26%;
+      height: 30%;
       .chart1_main {
         width: 100%;
         height: calc(100% - 22px);
@@ -930,28 +955,30 @@ export default {
         .chart {
           width: 50%;
           height: 100%;
-          border: 1px solid red;
         }
         .chartList {
           width: 50%;
           height: 100%;
-          padding: 20px 0;
+          // padding: 10px 0;
           box-sizing: border-box;
           .chartList-item {
-            opacity: 0.8;
-            border: 1px dashed rgba(255, 255, 255, 0.3);
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.3);
             display: flex;
-            font-size: 14px;
+            font-size: 15px;
             align-items: center;
             .index {
               border-radius: 5px;
               width: 10px;
               height: 10px;
+              margin-right: 8px;
             }
             div {
               width: 33%;
               opacity: 1;
               color: #fff;
+              height: 26px;
+              line-height: 26px;
+              text-align: left;
             }
           }
         }
@@ -959,7 +986,11 @@ export default {
     }
     .chart3 {
       width: 100%;
-      height: 26%;
+      height: 30%;
+      .chartBox {
+        width: 100%;
+        height: calc(100% - 36px);
+      }
     }
   }
 }
